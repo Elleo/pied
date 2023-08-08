@@ -20,7 +20,11 @@ parts:
     plugin: flutter
     flutter-target: lib/main.dart
     build-packages: [pkg-config, libgtk-3-dev]
+    stage-packages: [libgtk-3-0]
     override-pull: |
       set -eux
       rm -rf $SNAPCRAFT_PROJECT_DIR/build
       snapcraftctl pull
+    build-attributes:
+      - enable-patchelf
+
