@@ -48,10 +48,17 @@ class _VoiceSelectorState extends State<VoiceSelector> {
     if (modelConf.existsSync()) {
       String config = modelConf.readAsStringSync();
       RegExp re = RegExp("--model *(.*onnx) *");
-      String? modelPath = re.firstMatch(config)?.group(0);
+      String? modelPath = re.firstMatch(config)?.group(1);
       if (modelPath != null) {
         setState(() {
           currentVoice = modelPath.split("/").last.trim();
+        });
+      }
+      re = RegExp("AddVoice \"([^\"]+)\"");
+      String? language = re.firstMatch(config)?.group(1);
+      if (language != null && languageCodes.containsKey(language)) {
+        setState(() {
+          selectedLanguage = languageCodes[language]!;
         });
       }
     }

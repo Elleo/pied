@@ -395,3 +395,27 @@ Map<String, Map<String, List<String>>> voices = {
     ],
   },
 };
+
+Map<String, String> languageCodes = {
+  "ca": "Catalan",
+  "de": "German",
+  "el-gr": "Greek",
+  "en-gb": "English (UK)",
+  "en-us": "English (US)",
+  "es": "Spanish",
+  "fr": "French",
+  "is": "Icelandic",
+  "it": "Italian",
+  "kk": "Kazakh",
+  "ne": "Nepali",
+  "nl_be": "Dutch (Belgium)",
+  "nl_nl": "Dutch (Netherlands)",
+  "no": "Norwegian",
+  "pl": "Polish",
+  "pt-br": "Brazilian Portuguese",
+  "ru": "Russian",
+  "sv-se": "Swedish",
+  "uk": "Ukrainian",
+  "vi": "Vietnamese",
+  "zh-cn": "Chinese"
+};
