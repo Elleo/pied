@@ -41,7 +41,7 @@ dependencies:
   path_provider: ^2.0.15
   path: ^1.8.2
   archive: ^3.3.7
-  posix: ^4.1.0
+  posix: ^5.0.0
   just_audio: ^0.9.34
   just_audio_mpv: ^0.1.6
 
