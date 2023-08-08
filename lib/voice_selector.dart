@@ -169,7 +169,10 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                     ?.entries
                                     .elementAt(index)
                                     .value[3]
-                            ? const Text("Current Voice")
+                            ? const SizedBox(
+                                height: 20,
+                                width: 99,
+                                child: Text("Current Voice"))
                             : Semantics(
                                 label: "Select $voice voice",
                                 enabled: true,
