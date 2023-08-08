@@ -403,6 +403,7 @@ Map<String, String> languageCodes = {
   "en-gb": "English (UK)",
   "en-us": "English (US)",
   "es": "Spanish",
+  "fi": "Finnish",
   "fr": "French",
   "is": "Icelandic",
   "it": "Italian",
