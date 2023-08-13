@@ -10,6 +10,7 @@ import 'alert_dialog.dart';
 import 'download_manager.dart';
 import 'templates.dart';
 import 'data.dart';
+import 'utils.dart';
 
 class VoiceSelector extends StatefulWidget {
   const VoiceSelector({super.key});
@@ -43,8 +44,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   }
 
   void getCurrentVoice() async {
-    File modelConf = File(path.join(Platform.environment['HOME']!,
-        ".config/speech-dispatcher/modules/piper.conf"));
+    File modelConf = File(
+        path.join(getHome()!, ".config/speech-dispatcher/modules/piper.conf"));
     if (modelConf.existsSync()) {
       String config = modelConf.readAsStringSync();
       RegExp re = RegExp("--model *(.*onnx) *");
@@ -65,8 +66,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   }
 
   void setSDConfig() async {
-    Directory confDir = Directory(
-        path.join(Platform.environment['HOME']!, ".config/speech-dispatcher"));
+    Directory confDir =
+        Directory(path.join(getHome()!, ".config/speech-dispatcher"));
     if (confDir.existsSync()) {
       File sdConfig = File(path.join(confDir.path, "speechd.conf"));
       if (sdConfig.existsSync()) {
@@ -183,7 +184,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                       Directory modelDir = Directory(
                                           path.join(appDir.path, "models"));
                                       File modelConf = File(path.join(
-                                          Platform.environment['HOME']!,
+                                          getHome()!,
                                           ".config/speech-dispatcher/modules/piper.conf"));
                                       setSDConfig();
                                       String configString = modelTemplate;

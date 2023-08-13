@@ -1,6 +1,6 @@
 name: pied
 base: core22
-version: '0.1'
+version: '0.1.1'
 summary: Pied makes it simple to install and manage text-to-speech voices.
 description: |
   Pied installs and configures the Piper neural text-to-speech engine to
@@ -8,19 +8,32 @@ description: |
   different voices.
 
 grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: classic
+confinement: strict
 
 apps:
   pied:
     command: pied
+    extensions: [gnome]
+    plugs:
+      - speech-dispatcher-config
+      - process-control
+      - network
+      - audio-playback
+plugs:
+  speech-dispatcher-config:
+    interface: personal-files
+    read:
+      - $HOME/.config/speech-dispatcher
+    write:
+      - $HOME/.config/speech-dispatcher
+
 
 parts:
   pied:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart
-    build-packages: [pkg-config, libgtk-3-dev, curl]
-    stage-packages: [libgtk-3-0]
+    stage-packages: [psmisc, speech-dispatcher, libaudio2, libsndio7.0]
     override-pull: |
       set -eux
       rm -rf $SNAPCRAFT_PROJECT_DIR/build
