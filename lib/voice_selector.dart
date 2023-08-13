@@ -28,7 +28,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   String currentVoice = "";
 
   void findDownloads() async {
-    final Directory appDir = await getApplicationSupportDirectory();
+    final Directory appDir = await getDataDir();
     Directory modelDir = Directory(path.join(appDir.path, "models"));
     if (!modelDir.existsSync()) {
       modelDir.createSync();
@@ -180,7 +180,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                 child: ElevatedButton(
                                     onPressed: () async {
                                       final Directory appDir =
-                                          await getApplicationSupportDirectory();
+                                          await getDataDir();
                                       Directory modelDir = Directory(
                                           path.join(appDir.path, "models"));
                                       File modelConf = File(path.join(
@@ -257,7 +257,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                             final String downloadPath = path
                                                 .join(tempDir.path, filename);
                                             final Directory appDir =
-                                                await getApplicationSupportDirectory();
+                                                await getDataDir();
                                             Directory modelDir = Directory(path
                                                 .join(appDir.path, "models"));
                                             downloadManager.download(

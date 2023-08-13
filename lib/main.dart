@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pied/utils.dart';
 import 'package:system_info2/system_info2.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 
 import 'download_manager.dart';
@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
   String title = "Piper Installation";
 
   void checkForPiper() async {
-    final Directory appDir = await getApplicationSupportDirectory();
+    final Directory appDir = await getDataDir();
     Directory piperDir = Directory(path.join(appDir.path, "piper"));
     setState(() {
       piperPresent = piperDir.existsSync();
