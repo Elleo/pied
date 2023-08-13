@@ -33,6 +33,7 @@ parts:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart
+    build-packages: [curl]
     stage-packages: [psmisc, speech-dispatcher, libaudio2, libsndio7.0]
     override-pull: |
       set -eux
