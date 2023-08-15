@@ -2,11 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:pied/extract.dart';
-import 'alert_dialog.dart';
 import 'download_manager.dart';
 import 'templates.dart';
 import 'data.dart';
@@ -21,7 +20,6 @@ class VoiceSelector extends StatefulWidget {
 
 class _VoiceSelectorState extends State<VoiceSelector> {
   String selectedLanguage = "English (US)";
-  bool audioPresent = Process.runSync("which", ["mpv"]).exitCode == 0;
   List<String> downloadedModels = [];
   List<String> workingOn = [];
   final player = AudioPlayer();
@@ -143,18 +141,12 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                         enabled: true,
                         child: IconButton(
                             onPressed: () async {
-                              if (audioPresent) {
-                                String? previewUrl = voices[selectedLanguage]
-                                    ?.entries
-                                    .elementAt(index)
-                                    .value[4];
-                                await player.setUrl(previewUrl!);
-                                player.play();
-                              } else {
-                                showAlertDialog(
-                                    context,
-                                    "Audio Previews Unavailable",
-                                    "Playback of audio previews requires MPV to be installed. Please install the 'mpv' package in your system's package manager and restart Pied.");
+                              String? previewUrl = voices[selectedLanguage]
+                                  ?.entries
+                                  .elementAt(index)
+                                  .value[4];
+                              if (previewUrl != null) {
+                                player.play(UrlSource(previewUrl));
                               }
                             },
                             icon: const Icon(Icons.play_arrow))),
