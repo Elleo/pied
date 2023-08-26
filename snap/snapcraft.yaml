@@ -33,8 +33,8 @@ parts:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart
-    build-packages: [curl]
-    stage-packages: [psmisc, speech-dispatcher, libaudio2, libsndio7.0]
+    build-packages: [curl, libgstreamer1.0-dev, libgstreamer-plugins-base1.0-dev, libgstreamer-plugins-good1.0-dev]
+    stage-packages: [psmisc, speech-dispatcher, libaudio2, libsndio7.0, libgstreamer1.0-0, libgstreamer-plugins-base1.0-0, libgstreamer-plugins-good1.0-0, libgstreamer-plugins-bad1.0-0]
     override-pull: |
       set -eux
       rm -rf $SNAPCRAFT_PROJECT_DIR/build
