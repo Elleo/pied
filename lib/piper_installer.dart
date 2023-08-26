@@ -10,6 +10,7 @@ import 'package:posix/posix.dart';
 import 'extract.dart';
 import 'download_manager.dart';
 import 'data.dart';
+import 'utils.dart';
 
 class PiperInstaller extends StatefulWidget {
   const PiperInstaller({super.key, required this.onInstallationComplete});
@@ -57,7 +58,7 @@ class _PiperInstallerState extends State<PiperInstaller> {
                     });
 
                     final Directory appDir =
-                        await getApplicationSupportDirectory();
+                        await getDataDir();
                     Map<String, dynamic> params = {
                       "archive": downloadPath,
                       "destination": appDir.path
