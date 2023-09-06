@@ -40,7 +40,7 @@ dependencies:
   http: ^1.1.0
   path_provider: ^2.0.15
   path: ^1.8.2
-  archive: ^3.3.7
+  archive: ^3.3.8
   posix: ^5.0.0
   audioplayers: ^5.1.0
 
