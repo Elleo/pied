@@ -62,8 +62,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
-        ),
+            title: Text(title),
+            actions: const [Image(image: AssetImage("assets/icon.png"))]),
         body: Padding(
           padding: const EdgeInsets.all(40),
           child: Center(
