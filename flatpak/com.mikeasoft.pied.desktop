@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Pied
+Comment=Text-to-speech voice manager
+Exec=pied
+Icon=com.mikeasoft.pied.png
+Terminal=false
+Type=Application
+Categories=Utility

@@ -1,0 +1,36 @@
+app-id: com.mikeasoft.pied
+runtime: org.freedesktop.Platform
+runtime-version: "22.08"
+sdk: org.freedesktop.Sdk
+command: pied
+separate-locales: false
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+  - --socket=pulseaudio
+  - --share=network
+  - --filesystem=home
+modules:
+  - name: Pied
+    buildsystem: simple
+    only-arches:
+      - x86_64
+    build-commands:
+      - "./build-flatpak.sh"
+    sources:
+      - type: dir
+        path: build
+      - type: file
+        path: build-flatpak.sh
+      - type: file
+        path: com.mikeasoft.pied.png
+      - type: file
+        path: com.mikeasoft.pied.desktop
+      - type: file
+        path: com.mikeasoft.pied.metainfo.xml
+      - type: file
+        path: /usr/bin/killall
+      - type: file
+        path: /usr/bin/spd-say

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.mikeasoft.pied</id>
+  <name>Pied</name>
+  <summary>TODO</summary>
+  <developer_name>Mike Sheldon</developer_name>
+  <url type="homepage">https://github.com/Elleo/pied</url>
+  <metadata_license>GPL3</metadata_license>
+  <project_license>GPL3</project_license>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+  <description>
+	<p>TODO</p>
+  </description>
+  <launchable type="desktop-id">com.mikeasoft.pied.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/Elleo/pied/screenshots/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="0.1" date="2023-08-26" />
+  </releases>
+</component>
