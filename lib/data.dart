@@ -8,11 +8,11 @@ List<ProcessorArchitecture> supportedArchitectures = [
 
 Map<ProcessorArchitecture, String> downloadUrls = {
   ProcessorArchitecture.arm64:
-      "https://github.com/rhasspy/piper/releases/download/v1.0.0/piper_arm64.tar.gz",
+      "https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_arm64.tar.gz",
   ProcessorArchitecture.arm:
-      "https://github.com/rhasspy/piper/releases/download/v1.0.0/piper_armv7.tar.gz",
+      "https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_armv7.tar.gz",
   ProcessorArchitecture.x86_64:
-      "https://github.com/rhasspy/piper/releases/download/v1.0.0/piper_amd64.tar.gz"
+      "https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_amd64.tar.gz"
 };
 
 // Format:
