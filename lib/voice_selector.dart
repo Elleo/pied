@@ -75,7 +75,12 @@ class _VoiceSelectorState extends State<VoiceSelector> {
           return;
         }
       }
-      confDir.renameSync("${confDir.path}.orig");
+      DateTime now = new DateTime.now();
+      Directory newDir = Directory("${confDir.path}.orig.${now.year}-${now.month}-${now.day}");
+      if (newDir.existsSync()) {
+        newDir.deleteSync(recursive: true);
+      }
+      confDir.renameSync(newDir.path);
     }
     confDir.createSync();
     Directory(path.join(confDir.path, "clients")).create();
