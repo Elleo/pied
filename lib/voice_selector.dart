@@ -75,8 +75,9 @@ class _VoiceSelectorState extends State<VoiceSelector> {
           return;
         }
       }
-      DateTime now = new DateTime.now();
-      Directory newDir = Directory("${confDir.path}.orig.${now.year}-${now.month}-${now.day}");
+      DateTime now = DateTime.now();
+      Directory newDir =
+          Directory("${confDir.path}.orig.${now.year}-${now.month}-${now.day}");
       if (newDir.existsSync()) {
         newDir.deleteSync(recursive: true);
       }
@@ -176,6 +177,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                 enabled: true,
                                 child: ElevatedButton(
                                     onPressed: () async {
+                                      setSDConfig();
                                       final Directory appDir =
                                           await getDataDir();
                                       Directory modelDir = Directory(
@@ -183,7 +185,6 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                       File modelConf = File(path.join(
                                           getHome()!,
                                           ".config/speech-dispatcher/modules/piper.conf"));
-                                      setSDConfig();
                                       String configString = modelTemplate;
                                       MapEntry<String, List<String>> voice =
                                           voices[selectedLanguage]!
