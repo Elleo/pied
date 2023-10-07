@@ -76,8 +76,19 @@ class _VoiceSelectorState extends State<VoiceSelector> {
         }
       }
       DateTime now = DateTime.now();
-      Directory newDir =
-          Directory("${confDir.path}.orig.${now.year}-${now.month}-${now.day}");
+      Directory newDir;
+      if (isSnap()) {
+        Directory origDir =
+            Directory(path.join(getHome()!, ".config/speech-dispatcher.orig"));
+        if (!origDir.existsSync()) {
+          origDir.createSync();
+        }
+        newDir = Directory(
+            "${confDir.path}.orig/${now.year}-${now.month}-${now.day}");
+      } else {
+        newDir = Directory(
+            "${confDir.path}.orig.${now.year}-${now.month}-${now.day}");
+      }
       if (newDir.existsSync()) {
         newDir.deleteSync(recursive: true);
       }

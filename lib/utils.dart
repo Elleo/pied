@@ -14,3 +14,7 @@ Future<Directory> getDataDir() async {
   }
   return getApplicationSupportDirectory();
 }
+
+bool isSnap() {
+  return Platform.environment.containsKey("SNAP_REAL_HOME");
+}
