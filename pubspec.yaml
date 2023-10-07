@@ -43,6 +43,7 @@ dependencies:
   archive: ^3.3.9
   posix: ^5.0.0
   audioplayers: ^5.1.0
+  flutter_local_notifications: ^16.1.0
 
 dev_dependencies:
   flutter_test:
