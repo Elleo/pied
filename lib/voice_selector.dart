@@ -12,7 +12,12 @@ import 'data.dart';
 import 'utils.dart';
 
 class VoiceSelector extends StatefulWidget {
-  const VoiceSelector({super.key});
+  const VoiceSelector(
+      {super.key,
+      required this.onVoiceChanged,
+      required this.onDownloadComplete});
+  final VoidCallback onVoiceChanged;
+  final VoidCallback onDownloadComplete;
 
   @override
   State<VoiceSelector> createState() => _VoiceSelectorState();
@@ -219,9 +224,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                       setState(() {
                                         currentVoice = voice.value[3];
                                       });
-                                      Process.run("spd-say", [
-                                        "'Your new voice has now been activated!'"
-                                      ]);
+                                      widget.onVoiceChanged();
                                     },
                                     child: const Text("Select Voice")))
                         : workingOn.contains(voices[selectedLanguage]
@@ -284,6 +287,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                 downloadedModels.add(modelFile);
                                                 workingOn.remove(modelFile);
                                               });
+                                              widget.onDownloadComplete();
                                             });
                                           },
                                         ));

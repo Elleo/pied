@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pied/utils.dart';
 import 'package:system_info2/system_info2.dart';
 import 'package:path/path.dart' as path;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'download_manager.dart';
 import 'piper_installer.dart';
@@ -40,6 +42,8 @@ class _MainPageState extends State<MainPage> {
   final downloadManager = DownloadManager();
   bool piperPresent = false;
   String title = "Piper Installation";
+  FlutterLocalNotificationsPlugin notification =
+      FlutterLocalNotificationsPlugin();
 
   void checkForPiper() async {
     final Directory appDir = await getDataDir();
@@ -55,7 +59,21 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+    final LinuxInitializationSettings initializationSettingsLinux =
+        LinuxInitializationSettings(defaultActionName: "Open");
+    final InitializationSettings initializationSettings =
+        InitializationSettings(linux: initializationSettingsLinux);
+    notification.initialize(initializationSettings);
+
     checkForPiper();
+  }
+
+  void showNotification(String message) {
+    const LinuxNotificationDetails linuxNotificationDetails =
+        LinuxNotificationDetails();
+    const NotificationDetails notificationDetails =
+        NotificationDetails(linux: linuxNotificationDetails);
+    notification.show(0, "Pied", message, notificationDetails);
   }
 
   @override
@@ -79,8 +97,17 @@ class _MainPageState extends State<MainPage> {
                               const Spacer(),
                             ])
                       : piperPresent
-                          ? const VoiceSelector()
+                          ? VoiceSelector(onVoiceChanged: () {
+                              Timer(const Duration(seconds: 1), () {
+                                showNotification(
+                                    "Your new voice has now been activated!");
+                              });
+                            }, onDownloadComplete: () {
+                              showNotification("Voice download complete.");
+                            })
                           : PiperInstaller(onInstallationComplete: () {
+                              showNotification(
+                                  "Piper installation complete. You can now download and select voices.");
                               checkForPiper();
                             })),
         ));
