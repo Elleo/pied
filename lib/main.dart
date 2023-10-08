@@ -98,6 +98,7 @@ class _MainPageState extends State<MainPage> {
                             ])
                       : piperPresent
                           ? VoiceSelector(onVoiceChanged: () {
+                              // Give time for speech-dispatcher to restart
                               Timer(const Duration(seconds: 1), () {
                                 showNotification(
                                     "Your new voice has now been activated!");
