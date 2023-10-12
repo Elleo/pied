@@ -1,6 +1,6 @@
 name: pied
 base: core22
-version: '0.1.6'
+version: '0.1.7'
 summary: Pied makes it simple to install and manage text-to-speech voices.
 description: |
   Pied installs and configures the Piper neural text-to-speech engine to
@@ -15,12 +15,12 @@ apps:
     command: pied
     extensions: [gnome]
     plugs:
-      - speech-dispatcher-config
+      - dot-config-speech-dispatcher
       - process-control
       - network
       - audio-playback
 plugs:
-  speech-dispatcher-config:
+  dot-config-speech-dispatcher:
     interface: personal-files
     read:
       - $HOME/.config/speech-dispatcher
