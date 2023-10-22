@@ -6,6 +6,7 @@ import 'package:pied/utils.dart';
 import 'package:system_info2/system_info2.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:yaru/yaru.dart';
 
 import 'download_manager.dart';
 import 'piper_installer.dart';
@@ -22,11 +23,11 @@ class PiedApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pied',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+      home: Builder(
+        builder: (context) => YaruTheme(
+          child: const MainPage(),
+        ),
       ),
-      home: const MainPage(),
     );
   }
 }
