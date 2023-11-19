@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ import 'download_manager.dart';
 import 'templates.dart';
 import 'data.dart';
 import 'utils.dart';
+import 'confirmation_dialog.dart';
 
 class VoiceSelector extends StatefulWidget {
   const VoiceSelector(
@@ -71,6 +73,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   void setSDConfig() async {
     Directory confDir =
         Directory(path.join(getHome()!, ".config/speech-dispatcher"));
+    Directory? originalConfigDir;
     if (confDir.existsSync()) {
       File sdConfig = File(path.join(confDir.path, "speechd.conf"));
       if (sdConfig.existsSync()) {
@@ -98,6 +101,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
         newDir.deleteSync(recursive: true);
       }
       confDir.renameSync(newDir.path);
+      originalConfigDir = newDir;
     }
     confDir.createSync();
     Directory(path.join(confDir.path, "clients")).create();
@@ -105,6 +109,66 @@ class _VoiceSelectorState extends State<VoiceSelector> {
     File sdConfig = File(path.join(confDir.path, "speechd.conf"));
     sdConfig.createSync();
     sdConfig.writeAsString(sdConfigTemplate);
+    Process.runSync("killall", ["speech-dispatcher"]);
+    Timer(const Duration(seconds: 2), () {
+      confirmConfigChange(originalConfigDir);
+    });
+  }
+
+  Future<void> revertConfig(Directory? originalConfigDir) async {
+    Directory confDir =
+        Directory(path.join(getHome()!, ".config/speech-dispatcher"));
+    confDir.deleteSync(recursive: true);
+    if (originalConfigDir != null) {
+      originalConfigDir.rename(confDir.path);
+    }
+    setState(() {
+      currentVoice = "";
+    });
+    Process.runSync("killall", ["speech-dispatcher"]);
+    Timer(const Duration(seconds: 2), () {
+      showDialog<void>(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return Semantics(
+                label:
+                    'Your previous speech dispatcher configuration has now been reinstated.',
+                enabled: true,
+                container: true,
+                child: AlertDialog(
+                    title:
+                        const Text('Speech Dispatcher Configuration Reverted'),
+                    content: const SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          Text(
+                              'Your previous speech dispatcher configuration has now been reinstated.')
+                        ],
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Okay'),
+                        autofocus: true,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ]));
+          });
+    });
+  }
+
+  Future<void> confirmConfigChange(Directory? originalConfigDir) async {
+    return showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return ConfirmationDialog(onRevert: () {
+            revertConfig(originalConfigDir);
+          });
+        });
   }
 
   @override

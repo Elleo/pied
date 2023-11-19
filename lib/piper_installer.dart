@@ -57,8 +57,7 @@ class _PiperInstallerState extends State<PiperInstaller> {
                       unpacking = true;
                     });
 
-                    final Directory appDir =
-                        await getDataDir();
+                    final Directory appDir = await getDataDir();
                     Map<String, dynamic> params = {
                       "archive": downloadPath,
                       "destination": appDir.path
