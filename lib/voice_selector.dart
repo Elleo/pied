@@ -31,6 +31,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   List<String> workingOn = [];
   final player = AudioPlayer();
   String currentVoice = "";
+  int previewing = -1;
+  String previewingLanguage = "English (US)";
 
   void findDownloads() async {
     final Directory appDir = await getDataDir();
@@ -65,6 +67,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
       if (language != null && languageCodes.containsKey(language)) {
         setState(() {
           selectedLanguage = languageCodes[language]!;
+          previewingLanguage = selectedLanguage;
         });
       }
     }
@@ -176,6 +179,13 @@ class _VoiceSelectorState extends State<VoiceSelector> {
     super.initState();
     findDownloads();
     getCurrentVoice();
+    player.onPlayerStateChanged.listen((event) {
+      if (event != PlayerState.playing) {
+        setState(() {
+          previewing = -1;
+        });
+      }
+    });
   }
 
   @override
@@ -215,6 +225,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                   String? voice =
                       voices[selectedLanguage]?.keys.elementAt(index);
                   DownloadManager downloadManager = DownloadManager();
+
                   return Padding(
                       padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                       child: Row(children: [
@@ -229,15 +240,28 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                             enabled: true,
                             child: IconButton(
                                 onPressed: () async {
-                                  String? previewUrl = voices[selectedLanguage]
-                                      ?.entries
-                                      .elementAt(index)
-                                      .value[4];
-                                  if (previewUrl != null) {
-                                    player.play(UrlSource(previewUrl));
+                                  if (previewing == index &&
+                                      previewingLanguage == selectedLanguage) {
+                                    player.stop();
+                                  } else {
+                                    String? previewUrl =
+                                        voices[selectedLanguage]
+                                            ?.entries
+                                            .elementAt(index)
+                                            .value[4];
+                                    if (previewUrl != null) {
+                                      player.play(UrlSource(previewUrl));
+                                      setState(() {
+                                        previewing = index;
+                                        previewingLanguage = selectedLanguage;
+                                      });
+                                    }
                                   }
                                 },
-                                icon: const Icon(Icons.play_arrow))),
+                                icon: previewing == index &&
+                                        previewingLanguage == selectedLanguage
+                                    ? const Icon(Icons.stop)
+                                    : const Icon(Icons.play_arrow))),
                         const SizedBox(width: 32),
                         Text(voice!),
                         const Spacer(),
