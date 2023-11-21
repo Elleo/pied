@@ -201,8 +201,8 @@ Map<String, Map<String, List<String>>> voices = {
       "16000",
       "fr",
       "https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-fr-mls_1840-low.tar.gz",
-      "fr-mls_1840-low.onnx"
-          "https://github.com/rhasspy/piper-samples/raw/master/samples/fr/fr_FR/mls_1840/low/speaker_0.mp3"
+      "fr-mls_1840-low.onnx",
+      "https://github.com/rhasspy/piper-samples/raw/master/samples/fr/fr_FR/mls_1840/low/speaker_0.mp3"
     ],
     "Siwis": [
       "22050",
