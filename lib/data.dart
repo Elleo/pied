@@ -93,8 +93,8 @@ Map<String, Map<String, List<String>>> voices = {
       "16000",
       "el-gr",
       "https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-el-gr-rapunzelina-low.tar.gz",
-      "el-gr-rapunzelina-low.onnx"
-          "https://github.com/rhasspy/piper-samples/raw/master/samples/el/el_GR/rapunzelina/low/speaker_0.mp3"
+      "el-gr-rapunzelina-low.onnx",
+      "https://github.com/rhasspy/piper-samples/raw/master/samples/el/el_GR/rapunzelina/low/speaker_0.mp3"
     ]
   },
   "English (UK)": {
