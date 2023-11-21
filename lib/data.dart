@@ -85,7 +85,7 @@ Map<String, Map<String, List<String>>> voices = {
       "de",
       "https://github.com/rhasspy/piper/releases/download/v0.0.2/voice-de-thorsten-low.tar.gz",
       "de-thorsten-low.onnx",
-      "https://github.com/rhasspy/piper-samples/blob/master/samples/de/de_DE/thorsten/low/speaker_0.mp3"
+      "https://github.com/rhasspy/piper-samples/raw/master/samples/de/de_DE/thorsten/low/speaker_0.mp3"
     ],
   },
   "Greek": {
