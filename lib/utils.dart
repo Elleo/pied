@@ -18,3 +18,7 @@ Future<Directory> getDataDir() async {
 bool isSnap() {
   return Platform.environment.containsKey("SNAP_REAL_HOME");
 }
+
+bool isFlatpak() {
+  return Platform.environment.containsKey("FLATPAK_ID");
+}

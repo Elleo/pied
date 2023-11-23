@@ -509,6 +509,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.9"
+  xdg_desktop_portal:
+    dependency: "direct main"
+    description:
+      name: xdg_desktop_portal
+      sha256: "8a630ea1ebb7d1a9733d0cf6d159839f427d10322776de0c93e7951f62975c8d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.12"
   xdg_directories:
     dependency: transitive
     description:

@@ -7,6 +7,7 @@ import 'package:system_info2/system_info2.dart';
 import 'package:path/path.dart' as path;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:yaru/yaru.dart';
+import 'package:xdg_desktop_portal/xdg_desktop_portal.dart';
 
 import 'download_manager.dart';
 import 'piper_installer.dart';
@@ -24,8 +25,8 @@ class PiedApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Builder(
-        builder: (context) => YaruTheme(
-          child: const MainPage(),
+        builder: (context) => const YaruTheme(
+          child: MainPage(),
         ),
       ),
     );
@@ -60,9 +61,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    final LinuxInitializationSettings initializationSettingsLinux =
+    const LinuxInitializationSettings initializationSettingsLinux =
         LinuxInitializationSettings(defaultActionName: "Open");
-    final InitializationSettings initializationSettings =
+    const InitializationSettings initializationSettings =
         InitializationSettings(linux: initializationSettingsLinux);
     notification.initialize(initializationSettings);
 
@@ -70,11 +71,17 @@ class _MainPageState extends State<MainPage> {
   }
 
   void showNotification(String message) {
-    const LinuxNotificationDetails linuxNotificationDetails =
-        LinuxNotificationDetails();
-    const NotificationDetails notificationDetails =
-        NotificationDetails(linux: linuxNotificationDetails);
-    notification.show(0, "Pied", message, notificationDetails);
+    if (isFlatpak()) {
+      var client = XdgDesktopPortalClient();
+      client.notification
+          .addNotification("com.mikeasoft.pied", title: "Pied", body: message);
+    } else {
+      const LinuxNotificationDetails linuxNotificationDetails =
+          LinuxNotificationDetails();
+      const NotificationDetails notificationDetails =
+          NotificationDetails(linux: linuxNotificationDetails);
+      notification.show(0, "Pied", message, notificationDetails);
+    }
   }
 
   @override
