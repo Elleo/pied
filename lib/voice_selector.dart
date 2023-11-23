@@ -314,8 +314,16 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               configString.replaceAll(
                                                   "LANGUAGE", voice.value[1]);
                                           modelConf.writeAsString(configString);
-                                          Process.runSync(
-                                              "killall", ["speech-dispatcher"]);
+                                          if (isFlatpak()) {
+                                            Process.runSync("flatpak-spawn", [
+                                              "--host",
+                                              "killall",
+                                              "speech-dispatcher"
+                                            ]);
+                                          } else {
+                                            Process.runSync("killall",
+                                                ["speech-dispatcher"]);
+                                          }
                                           setState(() {
                                             currentVoice = voice.value[3];
                                           });

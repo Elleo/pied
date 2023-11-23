@@ -12,6 +12,7 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
   - --filesystem=home
+  - --talk-name=org.freedesktop.Flatpak
 modules:
   - name: Pied
     buildsystem: simple
