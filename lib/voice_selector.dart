@@ -50,6 +50,18 @@ class _VoiceSelectorState extends State<VoiceSelector> {
     });
   }
 
+  void restartSD() {
+      if (isFlatpak()) {
+          Process.runSync("flatpak-spawn", [
+              "--host",
+              "killall",
+              "speech-dispatcher"
+          ]);
+      } else {
+        Process.runSync("killall", ["speech-dispatcher"]);
+      }
+  }
+
   void getCurrentVoice() async {
     File modelConf = File(
         path.join(getHome()!, ".config/speech-dispatcher/modules/piper.conf"));
@@ -112,7 +124,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
     File sdConfig = File(path.join(confDir.path, "speechd.conf"));
     sdConfig.createSync();
     sdConfig.writeAsString(sdConfigTemplate);
-    Process.runSync("killall", ["speech-dispatcher"]);
+    restartSD();
     Timer(const Duration(seconds: 2), () {
       confirmConfigChange(originalConfigDir);
     });
@@ -128,7 +140,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
     setState(() {
       currentVoice = "";
     });
-    Process.runSync("killall", ["speech-dispatcher"]);
+    restartSD();
     Timer(const Duration(seconds: 2), () {
       showDialog<void>(
           context: context,
@@ -314,16 +326,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               configString.replaceAll(
                                                   "LANGUAGE", voice.value[1]);
                                           modelConf.writeAsString(configString);
-                                          if (isFlatpak()) {
-                                            Process.runSync("flatpak-spawn", [
-                                              "--host",
-                                              "killall",
-                                              "speech-dispatcher"
-                                            ]);
-                                          } else {
-                                            Process.runSync("killall",
-                                                ["speech-dispatcher"]);
-                                          }
+                                          restartSD();
                                           setState(() {
                                             currentVoice = voice.value[3];
                                           });
