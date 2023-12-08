@@ -16,5 +16,6 @@ SymbolsPreprocFile "emojis.dic"
 SymbolsPreprocFile "orca.dic"
 SymbolsPreprocFile "orca-chars.dic"
 AddModule "piper" "sd_generic" "piper.conf"
+DefaultModule "piper"
 Include "clients/*.conf"
 """;
