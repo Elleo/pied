@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'countdown_button.dart';
 
@@ -8,10 +7,11 @@ class ConfirmationDialog extends StatefulWidget {
   final VoidCallback onRevert;
 
   @override
-  _ConfirmationDialogState createState() => new _ConfirmationDialogState();
+  State<ConfirmationDialog> createState() => _ConfirmationDialogState();
 }
 
 class _ConfirmationDialogState extends State<ConfirmationDialog> {
+  @override
   Widget build(BuildContext context) {
     return Semantics(
         label:

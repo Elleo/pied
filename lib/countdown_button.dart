@@ -7,7 +7,7 @@ class CountdownButton extends StatefulWidget {
   final VoidCallback onPressed;
 
   @override
-  _CountdownButtonState createState() => new _CountdownButtonState();
+  State<CountdownButton> createState() => _CountdownButtonState();
 }
 
 class _CountdownButtonState extends State<CountdownButton> {
