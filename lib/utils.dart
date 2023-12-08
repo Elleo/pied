@@ -22,3 +22,7 @@ bool isSnap() {
 bool isFlatpak() {
   return Platform.environment.containsKey("FLATPAK_ID");
 }
+
+String getVersion() {
+  return "0.1.13";
+}

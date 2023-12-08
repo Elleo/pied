@@ -90,8 +90,14 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
             title: Text(title),
             actions: const [Image(image: AssetImage("assets/icon.png"))]),
+        bottomNavigationBar: BottomAppBar(
+            height: 36,
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Align(
+                alignment: Alignment.topRight,
+                child: Text("Version: ${getVersion()}"))),
         body: Padding(
-          padding: const EdgeInsets.all(40),
+          padding: const EdgeInsets.fromLTRB(40, 40, 40, 0),
           child: Center(
               child:
                   !supportedArchitectures.contains(SysInfo.kernelArchitecture)
