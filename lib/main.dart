@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pied/utils.dart';
 import 'package:system_info2/system_info2.dart';
@@ -8,6 +9,8 @@ import 'package:path/path.dart' as path;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:yaru/yaru.dart';
 import 'package:xdg_desktop_portal/xdg_desktop_portal.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'download_manager.dart';
 import 'piper_installer.dart';
@@ -43,6 +46,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final downloadManager = DownloadManager();
   bool piperPresent = false;
+  bool updateAvailable = false;
   String title = "Piper Installation";
   FlutterLocalNotificationsPlugin notification =
       FlutterLocalNotificationsPlugin();
@@ -58,6 +62,16 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  void checkForUpdate() {
+    Future<http.Response> response =
+        http.get(Uri.parse('https://pied.mikeasoft.com/version'));
+    response.then((value) {
+      setState(() {
+        updateAvailable = value.body.trim() != getVersion();
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -67,6 +81,7 @@ class _MainPageState extends State<MainPage> {
         InitializationSettings(linux: initializationSettingsLinux);
     notification.initialize(initializationSettings);
 
+    checkForUpdate();
     checkForPiper();
   }
 
@@ -92,10 +107,22 @@ class _MainPageState extends State<MainPage> {
             actions: const [Image(image: AssetImage("assets/icon.png"))]),
         bottomNavigationBar: BottomAppBar(
             height: 36,
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+            padding: EdgeInsets.zero,
             child: Align(
                 alignment: Alignment.topRight,
-                child: Text("Version: ${getVersion()}"))),
+                child: updateAvailable
+                    ? Row(children: [
+                        const Spacer(),
+                        Text("Version: ${getVersion()}"),
+                        TextButton(
+                            child: const Text("Update Available"),
+                            onPressed: () {
+                              launch("https://pied.mikeasoft.com/#download");
+                            })
+                      ])
+                    : Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                        child: Text("Version: ${getVersion()}")))),
         body: Padding(
           padding: const EdgeInsets.fromLTRB(40, 40, 40, 0),
           child: Center(
