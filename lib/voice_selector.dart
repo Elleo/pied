@@ -33,6 +33,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   String currentVoice = "";
   int previewing = -1;
   String previewingLanguage = "English (US)";
+  List<String> languages = voices.keys.toList();
 
   void findDownloads() async {
     final Directory appDir = await getDataDir();
@@ -186,6 +187,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   @override
   void initState() {
     super.initState();
+    languages.sort();
     findDownloads();
     getCurrentVoice();
     player.onPlayerStateChanged.listen((event) {
@@ -216,7 +218,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                   selectedLanguage = value!;
                 });
               },
-              items: voices.keys.map<DropdownMenuItem<String>>((String value) {
+              items: languages.map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
                   child: Semantics(
