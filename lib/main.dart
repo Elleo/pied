@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
         appBar: AppBar(
             title: Text(title),
-            actions: const [Image(image: AssetImage("assets/icon.png"))]),
+            actions: const [Image(image: AssetImage("assets/icon-cut.png"))]),
         bottomNavigationBar: BottomAppBar(
             height: 36,
             padding: EdgeInsets.zero,

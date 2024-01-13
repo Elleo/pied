@@ -51,15 +51,12 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   }
 
   void restartSD() {
-      if (isFlatpak()) {
-          Process.runSync("flatpak-spawn", [
-              "--host",
-              "killall",
-              "speech-dispatcher"
-          ]);
-      } else {
-        Process.runSync("killall", ["speech-dispatcher"]);
-      }
+    if (isFlatpak()) {
+      Process.runSync(
+          "flatpak-spawn", ["--host", "killall", "speech-dispatcher"]);
+    } else {
+      Process.runSync("killall", ["speech-dispatcher"]);
+    }
   }
 
   void getCurrentVoice() async {
@@ -246,7 +243,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                     voices[selectedLanguage]
                                         ?.entries
                                         .elementAt(index)
-                                        .value[3]
+                                        .value[4]
                                 ? "$voice is the currently selected voice. Preview $voice"
                                 : "Preview $voice",
                             enabled: true,
@@ -260,7 +257,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                         voices[selectedLanguage]
                                             ?.entries
                                             .elementAt(index)
-                                            .value[4];
+                                            .value[5];
                                     if (previewUrl != null) {
                                       player.play(UrlSource(previewUrl));
                                       setState(() {
@@ -285,7 +282,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                     voices[selectedLanguage]
                                         ?.entries
                                         .elementAt(index)
-                                        .value[3]
+                                        .value[4]
                                 ? const SizedBox(
                                     height: 20,
                                     width: 99,
@@ -317,7 +314,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               configString.replaceAll(
                                                   "MODEL_PATH",
                                                   path.join(modelDir.path,
-                                                      voice.value[3]));
+                                                      voice.value[4]));
                                           configString =
                                               configString.replaceAll(
                                                   "SAMPLE_RATE",
@@ -363,11 +360,16 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                         ?.entries
                                                         .elementAt(index)
                                                         .value[2];
+                                                String? downloadMetaUrl =
+                                                    voices[selectedLanguage]
+                                                        ?.entries
+                                                        .elementAt(index)
+                                                        .value[3];
                                                 String modelFile =
                                                     voices[selectedLanguage]!
                                                         .entries
                                                         .elementAt(index)
-                                                        .value[3];
+                                                        .value[4];
                                                 String filename =
                                                     "$modelFile.tar.gz";
                                                 final Directory tempDir =
@@ -381,23 +383,18 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                     path.join(
                                                         appDir.path, "models"));
                                                 downloadManager.download(
+                                                    downloadMetaUrl!,
+                                                    File(
+                                                        "${modelDir.path}/$modelFile.json"),
+                                                    () {});
+                                                downloadManager.download(
                                                     downloadUrl!,
-                                                    File(downloadPath),
+                                                    File(
+                                                        "${modelDir.path}/$modelFile"),
                                                     () async {
-                                                  Map<String, dynamic> params =
-                                                      {
-                                                    "archive": downloadPath,
-                                                    "destination": modelDir.path
-                                                  };
-                                                  setState(() {
-                                                    workingOn.add(modelFile);
-                                                  });
-                                                  await compute(
-                                                      extract, params);
                                                   setState(() {
                                                     downloadedModels
                                                         .add(modelFile);
-                                                    workingOn.remove(modelFile);
                                                   });
                                                   widget.onDownloadComplete();
                                                 });
