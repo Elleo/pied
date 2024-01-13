@@ -240,39 +240,48 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                   return Padding(
                       padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                       child: Row(children: [
-                        Semantics(
-                            label: currentVoice ==
-                                    voices[selectedLanguage]
-                                        ?.entries
-                                        .elementAt(index)
-                                        .value[4]
-                                ? "$voice is the currently selected voice. Preview $voice"
-                                : "Preview $voice",
-                            enabled: true,
-                            child: IconButton(
-                                onPressed: () async {
-                                  if (previewing == index &&
-                                      previewingLanguage == selectedLanguage) {
-                                    player.stop();
-                                  } else {
-                                    String? previewUrl =
+                        voices[selectedLanguage]
+                                    ?.entries
+                                    .elementAt(index)
+                                    .value[5] ==
+                                ""
+                            ? const SizedBox()
+                            : Semantics(
+                                label: currentVoice ==
                                         voices[selectedLanguage]
                                             ?.entries
                                             .elementAt(index)
-                                            .value[5];
-                                    if (previewUrl != null) {
-                                      player.play(UrlSource(previewUrl));
-                                      setState(() {
-                                        previewing = index;
-                                        previewingLanguage = selectedLanguage;
-                                      });
-                                    }
-                                  }
-                                },
-                                icon: previewing == index &&
-                                        previewingLanguage == selectedLanguage
-                                    ? const Icon(Icons.stop)
-                                    : const Icon(Icons.play_arrow))),
+                                            .value[4]
+                                    ? "$voice is the currently selected voice. Preview $voice"
+                                    : "Preview $voice",
+                                enabled: true,
+                                child: IconButton(
+                                    onPressed: () async {
+                                      if (previewing == index &&
+                                          previewingLanguage ==
+                                              selectedLanguage) {
+                                        player.stop();
+                                      } else {
+                                        String? previewUrl =
+                                            voices[selectedLanguage]
+                                                ?.entries
+                                                .elementAt(index)
+                                                .value[5];
+                                        if (previewUrl != null) {
+                                          player.play(UrlSource(previewUrl));
+                                          setState(() {
+                                            previewing = index;
+                                            previewingLanguage =
+                                                selectedLanguage;
+                                          });
+                                        }
+                                      }
+                                    },
+                                    icon: previewing == index &&
+                                            previewingLanguage ==
+                                                selectedLanguage
+                                        ? const Icon(Icons.stop)
+                                        : const Icon(Icons.play_arrow))),
                         const SizedBox(width: 32),
                         Text(voice!),
                         const Spacer(),
