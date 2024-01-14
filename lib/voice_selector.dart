@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:pied/extract.dart';
 import 'download_manager.dart';
+import 'info_dialog.dart';
 import 'templates.dart';
 import 'data.dart';
 import 'utils.dart';
@@ -412,7 +413,34 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               },
                                             ));
                                       }
-                                    })
+                                    }),
+                        const SizedBox(width: 10),
+                        voices[selectedLanguage]
+                                    ?.entries
+                                    .elementAt(index)
+                                    .value[6] ==
+                                ""
+                            ? const SizedBox()
+                            : Semantics(
+                                label: "Information about $voice",
+                                enabled: true,
+                                child: IconButton(
+                                    icon: const Icon(Icons.info),
+                                    onPressed: () {
+                                      showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return InfoDialog(
+                                              modelName: voice,
+                                              infoUri: Uri.parse(
+                                                  voices[selectedLanguage]!
+                                                      .entries
+                                                      .elementAt(index)
+                                                      .value[6]),
+                                            );
+                                          });
+                                    }))
                       ]));
                 })),
       ],

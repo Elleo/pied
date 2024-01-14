@@ -47,6 +47,7 @@ dependencies:
   yaru: ^1.1.0
   xdg_desktop_portal: ^0.1.12
   url_launcher: ^6.1.14
+  markdown_widget: ^2.3.1
 
 dev_dependencies:
   flutter_test:
