@@ -81,7 +81,9 @@ class _MainPageState extends State<MainPage> {
         InitializationSettings(linux: initializationSettingsLinux);
     notification.initialize(initializationSettings);
 
-    checkForUpdate();
+    if (!isSnap()) {
+      checkForUpdate();
+    }
     checkForPiper();
   }
 
