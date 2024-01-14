@@ -288,7 +288,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                         downloadedModels.contains(voices[selectedLanguage]
                                 ?.entries
                                 .elementAt(index)
-                                .value[3])
+                                .value[4])
                             ? currentVoice ==
                                     voices[selectedLanguage]
                                         ?.entries
