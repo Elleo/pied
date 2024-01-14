@@ -1,13 +1,13 @@
 // If sox is available on the host system we use it to adjust pitch and rate
-// Otherwise, we pass the output unmodified to the PLAY_COMMAND, but adjust its
-// parameters based on whether it's likely to be aplay or paplay
+// Otherwise, we pass the output unmodified to either paplay or aplay depending
+// on what is available on the system.
 const String modelTemplate = """
 GenericExecuteSynth "if command -v sox > /dev/null; then\\
         PROCESS=\\'sox -r SAMPLE_RATE -c 1 -b 16 -e signed-integer -t raw - -t wav - tempo \$RATE pitch \$PITCH norm\\'; OUTPUT=\\'\$PLAY_COMMAND\\';\\
-    elif [[ \\'\$PLAY_COMMAND\\' == aplay*]]; then\\
-        PROCESS=\\'cat\\'; OUTPUT=\\'\$PLAY_COMMAND -t raw -c 1 -r SAMPLE_RATE -f S16_LE\\';\\
-    else\\
+    elif command -v paplay > /dev/null; then\\
         PROCESS=\\'cat\\'; OUTPUT=\\'\$PLAY_COMMAND --raw --channels 1 --rate SAMPLE_RATE\\';\\
+    else\\
+        PROCESS=\\'cat\\'; OUTPUT=\\'aplay -t raw -c 1 -r SAMPLE_RATE -f S16_LE\\';\\
     fi;\\
     echo \\'\$DATA\\' | PIPER_PATH --model MODEL_PATH --output_raw | \$PROCESS | \$OUTPUT;"
 GenericRateAdd 1
