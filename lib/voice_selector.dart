@@ -336,7 +336,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           modelConf.writeAsString(configString);
                                           restartSD();
                                           setState(() {
-                                            currentVoice = voice.value[3];
+                                            currentVoice = voice.value[4];
                                           });
                                           widget.onVoiceChanged();
                                         },
