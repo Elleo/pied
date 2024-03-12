@@ -7,6 +7,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:pied/extract.dart';
+import 'delete_dialog.dart';
 import 'download_manager.dart';
 import 'info_dialog.dart';
 import 'templates.dart';
@@ -440,7 +441,50 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                       .value[6]),
                                             );
                                           });
+                                    })),
+                        downloadedModels.contains(voices[selectedLanguage]
+                                    ?.entries
+                                    .elementAt(index)
+                                    .value[4]) &&
+                                currentVoice !=
+                                    voices[selectedLanguage]
+                                        ?.entries
+                                        .elementAt(index)
+                                        .value[4]
+                            ? Semantics(
+                                label: "Delete $voice",
+                                enabled: true,
+                                child: IconButton(
+                                    icon: const Icon(Icons.delete),
+                                    onPressed: () async {
+                                      showDialog<void>(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return DeleteDialog(
+                                                onDelete: () async {
+                                              String modelFile =
+                                                  voices[selectedLanguage]!
+                                                      .entries
+                                                      .elementAt(index)
+                                                      .value[4];
+                                              final Directory appDir =
+                                                  await getDataDir();
+                                              Directory modelDir = Directory(
+                                                  path.join(
+                                                      appDir.path, "models"));
+                                              File("${modelDir.path}/$modelFile.json")
+                                                  .delete();
+                                              File("${modelDir.path}/$modelFile")
+                                                  .delete();
+                                              setState(() {
+                                                downloadedModels
+                                                    .remove(modelFile);
+                                              });
+                                            });
+                                          });
                                     }))
+                            : const SizedBox(width: 34)
                       ]));
                 })),
       ],
