@@ -2,11 +2,13 @@
 <component type="desktop-application">
   <id>com.mikeasoft.pied</id>
   <name>Pied</name>
-  <summary>Pied makes it simple to install and manage text-to-speech voices.</summary>
-  <developer_name>Mike Sheldon</developer_name>
+  <summary>Pied makes it simple to install and manage text-to-speech voices</summary>
+  <developer id="com.mikeasoft">
+      <name>Mike Sheldon</name>
+  </developer>
   <url type="homepage">https://pied.mikeasoft.com</url>
-  <metadata_license>GPL3</metadata_license>
-  <project_license>GPL3</project_license>
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-3.0+</project_license>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
@@ -18,12 +20,33 @@
   <launchable type="desktop-id">com.mikeasoft.pied.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/Elleo/pied/screenshots/screenshot.png</image>
+        <image>https://raw.githubusercontent.com/Elleo/pied/main/screenshots/screenshot.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
-    <release version="0.1.12" date="2023-11-26" />
+      <release version="0.2.1-1" date="2024-09-28">
+          <description>
+              * Rebuild against freedesktop 24.08
+          </description>
+      </release>
+      <release version="0.2.1" date="2024-03-12">
+          <description>
+              * Add delete voice button and confirmation dialog
+          </description>
+      </release>
+      <release version="0.2.0" date="2024-01-20">
+          <description>
+              * If available on the host system sox is now used to process audio, this allows for rate and pitch changes.
+              * If paplay isn't available on the host system Pied will now fallback to aplay (Fixes #1)
+              * Fix voice list in older versions of speech-dispatcher (Fixes #3)
+              * Support for all Piper 1.0 voices (Fixes #4)
+              * Provides notification if updates are available
+              * New logo! (thanks to Hanan)
+              * Remove need to unpack voices after download (faster voice install)
+              * Show additional information for each voice
+          </description>
+      </release>
     <release version="0.1.11" date="2023-11-26" />
   </releases>
 </component>

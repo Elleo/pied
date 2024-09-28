@@ -1,6 +1,6 @@
 app-id: com.mikeasoft.pied
 runtime: org.freedesktop.Platform
-runtime-version: "22.08"
+runtime-version: "24.08"
 sdk: org.freedesktop.Sdk
 command: pied
 separate-locales: false
@@ -21,8 +21,9 @@ modules:
     build-commands:
       - "./build-flatpak.sh"
     sources:
-      - type: dir
-        path: build
+      - type: file
+        url: https://github.com/Elleo/pied/releases/download/v0.2.1/pied-0.2.1-x86_64.tar.gz
+        sha256: a1225ac7494b172dcab88acb74dfeb30a08ae12fb2266f6c654a2473ee326f21
       - type: file
         path: build-flatpak.sh
       - type: file
@@ -33,5 +34,3 @@ modules:
         path: com.mikeasoft.pied.metainfo.xml
       - type: file
         path: /usr/bin/killall
-      - type: file
-        path: /usr/bin/spd-say
