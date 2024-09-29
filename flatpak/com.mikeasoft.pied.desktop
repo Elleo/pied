@@ -2,7 +2,7 @@
 Name=Pied
 Comment=Text-to-speech voice manager
 Exec=pied
-Icon=com.mikeasoft.pied.png
+Icon=com.mikeasoft.pied
 Terminal=false
 Type=Application
 Categories=Utility
