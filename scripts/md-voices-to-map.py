@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-
 import argparse
 import sys
 import markdown_to_json
 import json
 import re
 import requests
+from overrides import language_overrides, voice_overrides
 
 def read_input(source):
     if source == '-':
@@ -42,8 +42,10 @@ def main():
                     match = re.search(r'(\w+)\s+\((\w+)\)', value)
                     if match:
                         languageCodes[match.group(2)] = "{} ({})".format(match.group(1), re.sub(r'\w+?_', "", match.group(2)))
-                language = languageCodes[match.group(2)]
                 locale = match.group(2)
+                if locale in language_overrides:
+                    languageCodes[locale] = language_overrides[locale]
+                language = languageCodes[locale]
                 voices[language] = {}
             elif type(value) is list:
                 print("    Voices:")
@@ -68,7 +70,11 @@ def main():
                                 quality = match.group(1)
                                 if quality == "x_low":
                                     quality = "Very Low"
-                                voices[language]["{} - {}".format(voice.replace("_", " ").title(), quality.title())] = [
+                                if voice in voice_overrides:
+                                    voice = voice_overrides[voice]
+                                else:
+                                    voice = voice.replace("_", " ").title()
+                                voices[language]["{} - {}".format(voice, quality.title())] = [
                                                                 "{}".format(remote_config["audio"]["sample_rate"]),
                                                                 locale,
                                                                 model_url,

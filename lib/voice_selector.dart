@@ -26,13 +26,13 @@ class VoiceSelector extends StatefulWidget {
 }
 
 class _VoiceSelectorState extends State<VoiceSelector> {
-  String selectedLanguage = "English (US)";
+  String selectedLanguage = "English - US";
   List<String> downloadedModels = [];
   List<String> workingOn = [];
   final player = AudioPlayer();
   String currentVoice = "";
   int previewing = -1;
-  String previewingLanguage = "English (US)";
+  String previewingLanguage = "English - US";
   List<String> languages = voices.keys.toList();
 
   void findDownloads() async {
