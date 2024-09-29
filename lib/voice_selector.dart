@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
 import 'delete_dialog.dart';
 import 'download_manager.dart';
@@ -162,11 +161,11 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                     ),
                     actions: <Widget>[
                       TextButton(
-                        child: const Text('Okay'),
                         autofocus: true,
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
+                        child: const Text('Okay'),
                       ),
                     ]));
           });
@@ -381,13 +380,6 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                         .entries
                                                         .elementAt(index)
                                                         .value[4];
-                                                String filename =
-                                                    "$modelFile.tar.gz";
-                                                final Directory tempDir =
-                                                    await getTemporaryDirectory();
-                                                final String downloadPath =
-                                                    path.join(
-                                                        tempDir.path, filename);
                                                 final Directory appDir =
                                                     await getDataDir();
                                                 Directory modelDir = Directory(

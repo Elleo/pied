@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'countdown_button.dart';
 
 class DeleteDialog extends StatefulWidget {
   const DeleteDialog({super.key, required this.onDelete});
