@@ -65,7 +65,10 @@ def main():
                                 remote_config = r.json()
                                 sample_url = "{}{}".format(base_url, "/samples/speaker_0.mp3?download=true")
                                 card_url = "{}{}".format(base_url, "/MODEL_CARD?download=true")
-                                voices[language]["{} - {}".format(voice.capitalize(), match.group(1).capitalize())] = [
+                                quality = match.group(1)
+                                if quality == "x_low":
+                                    quality = "Very Low"
+                                voices[language]["{} - {}".format(voice.replace("_", " ").title(), quality.title())] = [
                                                                 "{}".format(remote_config["audio"]["sample_rate"]),
                                                                 locale,
                                                                 model_url,

@@ -26,7 +26,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Catalan (Catal\u00e0)": {
-    "Upc_ona - X_low": [
+    "Upc Ona - Very Low": [
       "16000",
       "ca_ES",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_ona/x_low/ca_ES-upc_ona-x_low.onnx?download=true",
@@ -35,7 +35,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_ona/x_low/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_ona/x_low/MODEL_CARD?download=true"
     ],
-    "Upc_ona - Medium": [
+    "Upc Ona - Medium": [
       "22050",
       "ca_ES",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_ona/medium/ca_ES-upc_ona-medium.onnx?download=true",
@@ -44,7 +44,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_ona/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_ona/medium/MODEL_CARD?download=true"
     ],
-    "Upc_pau - X_low": [
+    "Upc Pau - Very Low": [
       "16000",
       "ca_ES",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ca/ca_ES/upc_pau/x_low/ca_ES-upc_pau-x_low.onnx?download=true",
@@ -75,7 +75,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Welsh (Cymraeg)": {
-    "Gwryw_gogleddol - Medium": [
+    "Gwryw Gogleddol - Medium": [
       "22050",
       "cy_GB",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/cy/cy_GB/gwryw_gogleddol/medium/cy_GB-gwryw_gogleddol-medium.onnx?download=true",
@@ -97,7 +97,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "German (Deutsch)": {
-    "Eva_k - X_low": [
+    "Eva K - Very Low": [
       "16000",
       "de_DE",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/de/de_DE/eva_k/x_low/de_DE-eva_k-x_low.onnx?download=true",
@@ -178,7 +178,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/de/de_DE/thorsten/high/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/de/de_DE/thorsten/high/MODEL_CARD?download=true"
     ],
-    "Thorsten_emotional - Medium": [
+    "Thorsten Emotional - Medium": [
       "22050",
       "de_DE",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/de/de_DE/thorsten_emotional/medium/de_DE-thorsten_emotional-medium.onnx?download=true",
@@ -254,7 +254,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/cori/high/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/cori/high/MODEL_CARD?download=true"
     ],
-    "Jenny_dioco - Medium": [
+    "Jenny Dioco - Medium": [
       "22050",
       "en_GB",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/jenny_dioco/medium/en_GB-jenny_dioco-medium.onnx?download=true",
@@ -263,7 +263,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/jenny_dioco/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/jenny_dioco/medium/MODEL_CARD?download=true"
     ],
-    "Northern_english_male - Medium": [
+    "Northern English Male - Medium": [
       "22050",
       "en_GB",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/northern_english_male/medium/en_GB-northern_english_male-medium.onnx?download=true",
@@ -281,7 +281,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/semaine/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/semaine/medium/MODEL_CARD?download=true"
     ],
-    "Southern_english_female - Low": [
+    "Southern English Female - Low": [
       "16000",
       "en_GB",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_GB/southern_english_female/low/en_GB-southern_english_female-low.onnx?download=true",
@@ -346,7 +346,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/danny/low/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/danny/low/MODEL_CARD?download=true"
     ],
-    "Hfc_female - Medium": [
+    "Hfc Female - Medium": [
       "22050",
       "en_US",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/hfc_female/medium/en_US-hfc_female-medium.onnx?download=true",
@@ -355,7 +355,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/hfc_female/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/hfc_female/medium/MODEL_CARD?download=true"
     ],
-    "Hfc_male - Medium": [
+    "Hfc Male - Medium": [
       "22050",
       "en_US",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/hfc_male/medium/en_US-hfc_male-medium.onnx?download=true",
@@ -409,7 +409,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/kusal/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/kusal/medium/MODEL_CARD?download=true"
     ],
-    "L2arctic - Medium": [
+    "L2Arctic - Medium": [
       "22050",
       "en_US",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/l2arctic/medium/en_US-l2arctic-medium.onnx?download=true",
@@ -454,7 +454,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/libritts/high/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/libritts/high/MODEL_CARD?download=true"
     ],
-    "Libritts_r - Medium": [
+    "Libritts R - Medium": [
       "22050",
       "en_US",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/en/en_US/libritts_r/medium/en_US-libritts_r-medium.onnx?download=true",
@@ -597,7 +597,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/mls/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/mls/medium/MODEL_CARD?download=true"
     ],
-    "Mls_1840 - Low": [
+    "Mls 1840 - Low": [
       "16000",
       "fr_FR",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/fr/fr_FR/mls_1840/low/fr_FR-mls_1840-low.onnx?download=true",
@@ -720,7 +720,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/it/it_IT/paola/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/it/it_IT/paola/medium/MODEL_CARD?download=true"
     ],
-    "Riccardo - X_low": [
+    "Riccardo - Very Low": [
       "16000",
       "it_IT",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/it/it_IT/riccardo/x_low/it_IT-riccardo-x_low.onnx?download=true",
@@ -742,7 +742,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Kazakh (\u049b\u0430\u0437\u0430\u049b\u0448\u0430)": {
-    "Iseke - X_low": [
+    "Iseke - Very Low": [
       "16000",
       "kk_KZ",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/kk/kk_KZ/iseke/x_low/kk_KZ-iseke-x_low.onnx?download=true",
@@ -760,7 +760,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/kk/kk_KZ/issai/high/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/kk/kk_KZ/issai/high/MODEL_CARD?download=true"
     ],
-    "Raya - X_low": [
+    "Raya - Very Low": [
       "16000",
       "kk_KZ",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/kk/kk_KZ/raya/x_low/kk_KZ-raya-x_low.onnx?download=true",
@@ -782,7 +782,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Nepali (\u0928\u0947\u092a\u093e\u0932\u0940)": {
-    "Google - X_low": [
+    "Google - Very Low": [
       "16000",
       "ne_NP",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/ne/ne_NP/google/x_low/ne_NP-google-x_low.onnx?download=true",
@@ -811,7 +811,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/nl/nl_NL/mls/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/nl/nl_NL/mls/medium/MODEL_CARD?download=true"
     ],
-    "Mls_5809 - Low": [
+    "Mls 5809 - Low": [
       "16000",
       "nl_NL",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/nl/nl_NL/mls_5809/low/nl_NL-mls_5809-low.onnx?download=true",
@@ -820,7 +820,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/nl/nl_NL/mls_5809/low/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/nl/nl_NL/mls_5809/low/MODEL_CARD?download=true"
     ],
-    "Mls_7432 - Low": [
+    "Mls 7432 - Low": [
       "16000",
       "nl_NL",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/nl/nl_NL/mls_7432/low/nl_NL-mls_7432-low.onnx?download=true",
@@ -860,7 +860,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pl/pl_PL/gosia/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pl/pl_PL/gosia/medium/MODEL_CARD?download=true"
     ],
-    "Mc_speech - Medium": [
+    "Mc Speech - Medium": [
       "22050",
       "pl_PL",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pl/pl_PL/mc_speech/medium/pl_PL-mc_speech-medium.onnx?download=true",
@@ -869,7 +869,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pl/pl_PL/mc_speech/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pl/pl_PL/mc_speech/medium/MODEL_CARD?download=true"
     ],
-    "Mls_6892 - Low": [
+    "Mls 6892 - Low": [
       "16000",
       "pl_PL",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/pl/pl_PL/mls_6892/low/pl_PL-mls_6892-low.onnx?download=true",
@@ -962,7 +962,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Serbian (srpski)": {
-    "Serbski_institut - Medium": [
+    "Serbski Institut - Medium": [
       "22050",
       "sr_RS",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/sr/sr_RS/serbski_institut/medium/sr_RS-serbski_institut-medium.onnx?download=true",
@@ -1023,9 +1023,8 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/tr/tr_TR/fettah/medium/MODEL_CARD?download=true"
     ]
   },
-  "Ukrainian (\u0443\u043a\u0440\u0430\u0457\u0301\u043d\u0441\u044c\u043a\u0430 \u043c\u043e\u0301\u0432\u0430)":
-      {
-    "Lada - X_low": [
+  "Ukrainian (\u0443\u043a\u0440\u0430\u0457\u0301\u043d\u0441\u044c\u043a\u0430 \u043c\u043e\u0301\u0432\u0430)": {
+    "Lada - Very Low": [
       "16000",
       "uk_UA",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/uk/uk_UA/lada/x_low/uk_UA-lada-x_low.onnx?download=true",
@@ -1034,7 +1033,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/uk/uk_UA/lada/x_low/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/uk/uk_UA/lada/x_low/MODEL_CARD?download=true"
     ],
-    "Ukrainian_tts - Medium": [
+    "Ukrainian Tts - Medium": [
       "22050",
       "uk_UA",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/uk/uk_UA/ukrainian_tts/medium/uk_UA-ukrainian_tts-medium.onnx?download=true",
@@ -1045,7 +1044,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Vietnamese (Ti\u1ebfng Vi\u1ec7t)": {
-    "25hours_single - Low": [
+    "25Hours Single - Low": [
       "16000",
       "vi_VN",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/vi/vi_VN/25hours_single/low/vi_VN-25hours_single-low.onnx?download=true",
@@ -1063,7 +1062,7 @@ Map<String, Map<String, List<String>>> voices = {
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/vi/vi_VN/vais1000/medium/samples/speaker_0.mp3?download=true",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/vi/vi_VN/vais1000/medium/MODEL_CARD?download=true"
     ],
-    "Vivos - X_low": [
+    "Vivos - Very Low": [
       "16000",
       "vi_VN",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/vi/vi_VN/vivos/x_low/vi_VN-vivos-x_low.onnx?download=true",
@@ -1074,7 +1073,7 @@ Map<String, Map<String, List<String>>> voices = {
     ]
   },
   "Chinese (\u7b80\u4f53\u4e2d\u6587)": {
-    "Huayan - X_low": [
+    "Huayan - Very Low": [
       "16000",
       "zh_CN",
       "https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/zh/zh_CN/huayan/x_low/zh_CN-huayan-x_low.onnx?download=true",
@@ -1095,7 +1094,7 @@ Map<String, Map<String, List<String>>> voices = {
   }
 };
 
-Map<String, String> languageCodes = {
+Map<String, String> languageCodes ={
   "ar_JO": "Arabic (\u0627\u0644\u0639\u0631\u0628\u064a\u0629)",
   "ca_ES": "Catalan (Catal\u00e0)",
   "cs_CZ": "Czech (\u010ce\u0161tina)",
@@ -1113,8 +1112,7 @@ Map<String, String> languageCodes = {
   "hu_HU": "Hungarian (Magyar)",
   "is_IS": "Icelandic (\u00edslenska)",
   "it_IT": "Italian (Italiano)",
-  "ka_GE":
-      "Georgian (\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8 \u10d4\u10dc\u10d0)",
+  "ka_GE": "Georgian (\u10e5\u10d0\u10e0\u10d7\u10e3\u10da\u10d8 \u10d4\u10dc\u10d0)",
   "kk_KZ": "Kazakh (\u049b\u0430\u0437\u0430\u049b\u0448\u0430)",
   "lb_LU": "Luxembourgish (L\u00ebtzebuergesch)",
   "ne_NP": "Nepali (\u0928\u0947\u092a\u093e\u0932\u0940)",
@@ -1132,8 +1130,7 @@ Map<String, String> languageCodes = {
   "sv_SE": "Swedish (Svenska)",
   "sw_CD": "Swahili (Kiswahili)",
   "tr_TR": "Turkish (T\u00fcrk\u00e7e)",
-  "uk_UA":
-      "Ukrainian (\u0443\u043a\u0440\u0430\u0457\u0301\u043d\u0441\u044c\u043a\u0430 \u043c\u043e\u0301\u0432\u0430)",
+  "uk_UA": "Ukrainian (\u0443\u043a\u0440\u0430\u0457\u0301\u043d\u0441\u044c\u043a\u0430 \u043c\u043e\u0301\u0432\u0430)",
   "vi_VN": "Vietnamese (Ti\u1ebfng Vi\u1ec7t)",
   "zh_CN": "Chinese (\u7b80\u4f53\u4e2d\u6587)"
 };
