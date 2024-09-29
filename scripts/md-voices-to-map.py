@@ -63,7 +63,7 @@ def main():
                                 remote_config = r.json()
                                 sample_url = "{}{}".format(base_url, "/samples/speaker_0.mp3?download=true")
                                 card_url = "{}{}".format(base_url, "/MODEL_CARD?download=true")
-                                voices[language]["{} - {}".format(voice, match.group(1))] = [
+                                voices[language]["{} - {}".format(voice.capitalize(), match.group(1).capitalize())] = [
                                                                 "{}".format(remote_config["audio"]["sample_rate"]),
                                                                 locale,
                                                                 model_url,
