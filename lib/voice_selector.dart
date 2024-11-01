@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'delete_dialog.dart';
 import 'download_manager.dart';
@@ -33,6 +35,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   int previewing = -1;
   String previewingLanguage = "English - US";
   List<String> languages = voices.keys.toList();
+  Map<dynamic, dynamic> selectedSubVoice = {};
 
   void findDownloads() async {
     final Directory appDir = await getDataDir();
@@ -183,12 +186,28 @@ class _VoiceSelectorState extends State<VoiceSelector> {
         });
   }
 
+  void getSubVoiceSelection() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? subvoices = prefs.getString("subvoices");
+    if (subvoices != null) {
+      setState(() {
+        selectedSubVoice = jsonDecode(subvoices);
+      });
+    }
+  }
+
+  void saveSubVoiceSelection() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("subvoices", jsonEncode(selectedSubVoice));
+  }
+
   @override
   void initState() {
     super.initState();
     languages.sort();
     findDownloads();
     getCurrentVoice();
+    getSubVoiceSelection();
     player.onPlayerStateChanged.listen((event) {
       if (event != PlayerState.playing) {
         setState(() {
@@ -235,6 +254,10 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                   String? voice =
                       voices[selectedLanguage]?.keys.elementAt(index);
                   DownloadManager downloadManager = DownloadManager();
+                  Map<dynamic, dynamic> subvoices = voices[selectedLanguage]
+                      ?.entries
+                      .elementAt(index)
+                      .value[7];
 
                   return Padding(
                       padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
@@ -267,6 +290,10 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                 .elementAt(index)
                                                 .value[5];
                                         if (previewUrl != null) {
+                                          previewUrl = previewUrl.replaceAll(
+                                              ":speaker_id:",
+                                              (selectedSubVoice[voice] ?? 0)
+                                                  .toString());
                                           player.play(UrlSource(previewUrl));
                                           setState(() {
                                             previewing = index;
@@ -283,7 +310,27 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                         : const Icon(Icons.play_arrow))),
                         const SizedBox(width: 32),
                         Text(voice!),
+                        subvoices.isEmpty
+                            ? const SizedBox()
+                            : const Text(" - "),
+                        subvoices.isEmpty
+                            ? const SizedBox()
+                            : DropdownButton<int>(
+                                value: selectedSubVoice[voice] ?? 0,
+                                items: subvoices.entries
+                                    .map<DropdownMenuItem<int>>((entry) =>
+                                        DropdownMenuItem<int>(
+                                            value: entry.value,
+                                            child: Text(entry.key)))
+                                    .toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    selectedSubVoice[voice] = value!;
+                                  });
+                                  saveSubVoiceSelection();
+                                }),
                         const Spacer(),
+                        const SizedBox(width: 10),
                         downloadedModels.contains(voices[selectedLanguage]
                                 ?.entries
                                 .elementAt(index)
@@ -311,9 +358,13 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               getHome()!,
                                               ".config/speech-dispatcher/modules/piper.conf"));
                                           String configString = modelTemplate;
-                                          MapEntry<String, List<String>> voice =
-                                              voices[selectedLanguage]!
+                                          MapEntry<String, List<dynamic>>
+                                              voice = voices[selectedLanguage]!
                                                   .entries
+                                                  .elementAt(index);
+                                          String? voiceId =
+                                              voices[selectedLanguage]
+                                                  ?.keys
                                                   .elementAt(index);
                                           configString =
                                               configString.replaceAll(
@@ -332,6 +383,12 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           configString =
                                               configString.replaceAll(
                                                   "LANGUAGE", voice.value[1]);
+                                          configString =
+                                              configString.replaceAll(
+                                                  "SUBVOICE",
+                                                  (selectedSubVoice[voiceId] ??
+                                                          0)
+                                                      .toString());
                                           modelConf.writeAsString(configString);
                                           restartSD();
                                           setState(() {

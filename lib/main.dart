@@ -118,7 +118,8 @@ class _MainPageState extends State<MainPage> {
                         TextButton(
                             child: const Text("Update Available"),
                             onPressed: () {
-                              launch("https://pied.mikeasoft.com/#download");
+                              launchUrl(Uri.parse(
+                                  "https://pied.mikeasoft.com/#download"));
                             })
                       ])
                     : Padding(

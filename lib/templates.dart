@@ -9,7 +9,7 @@ GenericExecuteSynth "if command -v sox > /dev/null; then\\
     else\\
         PROCESS=\\'cat\\'; OUTPUT=\\'aplay -t raw -c 1 -r SAMPLE_RATE -f S16_LE\\';\\
     fi;\\
-    echo \\'\$DATA\\' | PIPER_PATH --model MODEL_PATH --output_raw | \$PROCESS | \$OUTPUT;"
+    echo \\'\$DATA\\' | PIPER_PATH --model MODEL_PATH -s SUBVOICE --output_raw | \$PROCESS | \$OUTPUT;"
 GenericRateAdd 1
 GenericPitchAdd 1
 GenericVolumeAdd 1

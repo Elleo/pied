@@ -65,7 +65,7 @@ def main():
                                 config_url = match.group(3)
                                 r = requests.get(config_url)
                                 remote_config = r.json()
-                                sample_url = "{}{}".format(base_url, "/samples/speaker_0.mp3?download=true")
+                                sample_url = "{}{}".format(base_url, r"/samples/speaker_:speaker_id:.mp3?download=true")
                                 card_url = "{}{}".format(base_url, "/MODEL_CARD?download=true")
                                 quality = match.group(1)
                                 if quality == "x_low":
@@ -81,9 +81,10 @@ def main():
                                                                 config_url,
                                                                 model_filename,
                                                                 sample_url,
-                                                                card_url
+                                                                card_url,
+                                                                remote_config["speaker_id_map"]
                                                             ]
-    output_data = "Map<String, Map<String, List<String>>> voices = %s;\n\nMap<String, String> languageCodes =%s;" % (json.dumps(voices, indent=2), json.dumps(languageCodes, indent=2))
+    output_data = "Map<String, Map<String, List<dynamic>>> voices = %s;\n\nMap<String, String> languageCodes =%s;" % (json.dumps(voices, indent=2), json.dumps(languageCodes, indent=2))
     if output_filename == "-":
         print("\nPied output:\n")
         print(output_data)
@@ -94,7 +95,7 @@ def main():
 // Any manual changes are likely to be overwritten.
 
 // Format:
-// Voice Name: [Sample Rate, Language Code, Model URL, Model Metadata URL, Filename, Sample URL (Optional), Model card (Optional)]
+// Voice Name: [Sample Rate, Language Code, Model URL, Model Metadata URL, Filename, Sample URL, Model card, Speaker Mapping]
 
 """)
         f.write(output_data)
