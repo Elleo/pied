@@ -36,6 +36,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   List<String> languages = voices.keys.toList();
   Map<dynamic, dynamic> selectedSubVoice = {};
   int currentSubVoice = 0;
+  Map<String, DownloadManager> downloadManagers = {};
 
   void findDownloads() async {
     final Directory appDir = await getDataDir();
@@ -260,7 +261,12 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                 itemBuilder: (BuildContext context, int index) {
                   String? voiceId =
                       voices[selectedLanguage]?.keys.elementAt(index);
-                  DownloadManager downloadManager = DownloadManager();
+                  if (voiceId == null) {
+                    return const SizedBox();
+                  }
+                  DownloadManager downloadManager =
+                      downloadManagers[voiceId] ?? DownloadManager();
+                  downloadManagers[voiceId] = downloadManager;
                   Map<dynamic, dynamic> subvoices = voices[selectedLanguage]
                       ?.entries
                       .elementAt(index)
@@ -307,7 +313,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                         ? const Icon(Icons.stop)
                                         : const Icon(Icons.play_arrow))),
                         const SizedBox(width: 32),
-                        Text(voiceId!),
+                        Text(voiceId),
                         subvoices.isEmpty
                             ? const SizedBox()
                             : const Text(" - "),
