@@ -29,7 +29,6 @@ class VoiceSelector extends StatefulWidget {
 class _VoiceSelectorState extends State<VoiceSelector> {
   String selectedLanguage = "English - US";
   List<String> downloadedModels = [];
-  List<String> workingOn = [];
   final player = AudioPlayer();
   String currentVoice = "";
   int previewing = -1;
@@ -266,22 +265,17 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                       ?.entries
                       .elementAt(index)
                       .value[7];
+                  MapEntry<String, List<dynamic>> voice =
+                      voices[selectedLanguage]!.entries.elementAt(index);
+                  String modelFile = voice.value[4];
 
                   return Padding(
                       padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
                       child: Row(children: [
-                        voices[selectedLanguage]
-                                    ?.entries
-                                    .elementAt(index)
-                                    .value[5] ==
-                                ""
+                        voice.value[5] == ""
                             ? const SizedBox()
                             : Semantics(
-                                label: currentVoice ==
-                                        voices[selectedLanguage]
-                                            ?.entries
-                                            .elementAt(index)
-                                            .value[4]
+                                label: currentVoice == modelFile
                                     ? "$voiceId is the currently selected voice. Preview $voiceId"
                                     : "Preview $voiceId",
                                 enabled: true,
@@ -292,11 +286,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               selectedLanguage) {
                                         player.stop();
                                       } else {
-                                        String? previewUrl =
-                                            voices[selectedLanguage]
-                                                ?.entries
-                                                .elementAt(index)
-                                                .value[5];
+                                        String? previewUrl = voice.value[5];
                                         if (previewUrl != null) {
                                           previewUrl = previewUrl.replaceAll(
                                               ":speaker_id:",
@@ -339,15 +329,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                 }),
                         const Spacer(),
                         const SizedBox(width: 10),
-                        downloadedModels.contains(voices[selectedLanguage]
-                                ?.entries
-                                .elementAt(index)
-                                .value[4])
-                            ? currentVoice ==
-                                        voices[selectedLanguage]
-                                            ?.entries
-                                            .elementAt(index)
-                                            .value[4] &&
+                        downloadedModels.contains(modelFile)
+                            ? currentVoice == modelFile &&
                                     currentSubVoice == selectedSubVoice[voiceId]
                                 ? const SizedBox(
                                     height: 20,
@@ -367,10 +350,6 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               getHome()!,
                                               ".config/speech-dispatcher/modules/piper.conf"));
                                           String configString = modelTemplate;
-                                          MapEntry<String, List<dynamic>>
-                                              voice = voices[selectedLanguage]!
-                                                  .entries
-                                                  .elementAt(index);
                                           configString =
                                               configString.replaceAll(
                                                   "PIPER_PATH",
@@ -380,7 +359,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                               configString.replaceAll(
                                                   "MODEL_PATH",
                                                   path.join(modelDir.path,
-                                                      voice.value[4]));
+                                                      modelFile));
                                           configString =
                                               configString.replaceAll(
                                                   "SAMPLE_RATE",
@@ -397,84 +376,59 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           modelConf.writeAsString(configString);
                                           restartSD();
                                           setState(() {
-                                            currentVoice = voice.value[4];
+                                            currentVoice = modelFile;
                                             currentSubVoice =
                                                 selectedSubVoice[voiceId] ?? 0;
                                           });
                                           widget.onVoiceChanged();
                                         },
                                         child: const Text("Select Voice")))
-                            : workingOn.contains(voices[selectedLanguage]
-                                    ?.entries
-                                    .elementAt(index)
-                                    .value[3])
-                                ? const SizedBox(
-                                    height: 20,
-                                    width: 94,
-                                    child: LinearProgressIndicator())
-                                : ValueListenableBuilder<double?>(
-                                    valueListenable:
-                                        downloadManager.progressNotifier,
-                                    builder: (context, progress, child) {
-                                      if (progress != null) {
-                                        return SizedBox(
-                                            height: 20,
-                                            width: 94,
-                                            child: LinearProgressIndicator(
-                                                value: progress));
-                                      } else {
-                                        return Semantics(
-                                            label: "Download $voiceId voice",
-                                            enabled: true,
-                                            child: ElevatedButton(
-                                              child: const Text("Download"),
-                                              onPressed: () async {
-                                                String? downloadUrl =
-                                                    voices[selectedLanguage]
-                                                        ?.entries
-                                                        .elementAt(index)
-                                                        .value[2];
-                                                String? downloadMetaUrl =
-                                                    voices[selectedLanguage]
-                                                        ?.entries
-                                                        .elementAt(index)
-                                                        .value[3];
-                                                String modelFile =
-                                                    voices[selectedLanguage]!
-                                                        .entries
-                                                        .elementAt(index)
-                                                        .value[4];
-                                                final Directory appDir =
-                                                    await getDataDir();
-                                                Directory modelDir = Directory(
-                                                    path.join(
-                                                        appDir.path, "models"));
-                                                downloadManager.download(
-                                                    downloadMetaUrl!,
-                                                    File(
-                                                        "${modelDir.path}/$modelFile.json"),
-                                                    () {});
-                                                downloadManager.download(
-                                                    downloadUrl!,
-                                                    File(
-                                                        "${modelDir.path}/$modelFile"),
-                                                    () async {
-                                                  setState(() {
-                                                    downloadedModels
-                                                        .add(modelFile);
-                                                  });
-                                                  widget.onDownloadComplete();
-                                                });
-                                              },
-                                            ));
-                                      }
-                                    }),
+                            : ValueListenableBuilder<double?>(
+                                valueListenable:
+                                    downloadManager.progressNotifier,
+                                builder: (context, progress, child) {
+                                  if (progress != null) {
+                                    return SizedBox(
+                                        height: 20,
+                                        width: 94,
+                                        child: LinearProgressIndicator(
+                                            value: progress));
+                                  } else {
+                                    return Semantics(
+                                        label: "Download $voiceId voice",
+                                        enabled: true,
+                                        child: ElevatedButton(
+                                          child: const Text("Download"),
+                                          onPressed: () async {
+                                            String? downloadUrl =
+                                                voice.value[2];
+                                            String? downloadMetaUrl =
+                                                voice.value[3];
+                                            final Directory appDir =
+                                                await getDataDir();
+                                            Directory modelDir = Directory(path
+                                                .join(appDir.path, "models"));
+                                            downloadManager.download(
+                                                downloadMetaUrl!,
+                                                File(
+                                                    "${modelDir.path}/$modelFile.json"),
+                                                () {});
+                                            downloadManager.download(
+                                                downloadUrl!,
+                                                File(
+                                                    "${modelDir.path}/$modelFile"),
+                                                () async {
+                                              setState(() {
+                                                downloadedModels.add(modelFile);
+                                              });
+                                              widget.onDownloadComplete();
+                                            });
+                                          },
+                                        ));
+                                  }
+                                }),
                         const SizedBox(width: 10),
-                        voices[selectedLanguage]
-                                    ?.entries
-                                    .elementAt(index)
-                                    .value[6] ==
-                                ""
+                        voice.value[6] == ""
                             ? const SizedBox()
                             : Semantics(
                                 label: "Information about $voiceId",
@@ -488,23 +442,13 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           builder: (BuildContext context) {
                                             return InfoDialog(
                                               modelName: voiceId,
-                                              infoUri: Uri.parse(
-                                                  voices[selectedLanguage]!
-                                                      .entries
-                                                      .elementAt(index)
-                                                      .value[6]),
+                                              infoUri:
+                                                  Uri.parse(voice.value[6]),
                                             );
                                           });
                                     })),
-                        downloadedModels.contains(voices[selectedLanguage]
-                                    ?.entries
-                                    .elementAt(index)
-                                    .value[4]) &&
-                                currentVoice !=
-                                    voices[selectedLanguage]
-                                        ?.entries
-                                        .elementAt(index)
-                                        .value[4]
+                        downloadedModels.contains(modelFile) &&
+                                currentVoice != modelFile
                             ? Semantics(
                                 label: "Delete $voiceId",
                                 enabled: true,
@@ -517,11 +461,6 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           builder: (BuildContext context) {
                                             return DeleteDialog(
                                                 onDelete: () async {
-                                              String modelFile =
-                                                  voices[selectedLanguage]!
-                                                      .entries
-                                                      .elementAt(index)
-                                                      .value[4];
                                               final Directory appDir =
                                                   await getDataDir();
                                               Directory modelDir = Directory(
