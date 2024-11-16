@@ -331,7 +331,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                         const SizedBox(width: 10),
                         downloadedModels.contains(modelFile)
                             ? currentVoice == modelFile &&
-                                    currentSubVoice == selectedSubVoice[voiceId]
+                                    currentSubVoice ==
+                                        (selectedSubVoice[voiceId] ?? 0)
                                 ? const SizedBox(
                                     height: 20,
                                     width: 99,
