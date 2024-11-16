@@ -36,6 +36,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   String previewingLanguage = "English - US";
   List<String> languages = voices.keys.toList();
   Map<dynamic, dynamic> selectedSubVoice = {};
+  int currentSubVoice = 0;
 
   void findDownloads() async {
     final Directory appDir = await getDataDir();
@@ -72,6 +73,13 @@ class _VoiceSelectorState extends State<VoiceSelector> {
       if (modelPath != null) {
         setState(() {
           currentVoice = modelPath.split("/").last.trim();
+        });
+      }
+      re = RegExp("-s (\\d)");
+      String? subVoice = re.firstMatch(config)?.group(1);
+      if (subVoice != null) {
+        setState(() {
+          currentSubVoice = int.parse(subVoice);
         });
       }
       re = RegExp("AddVoice \"([^\"]+)\"");
@@ -251,7 +259,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
             child: ListView.builder(
                 itemCount: voices[selectedLanguage]?.length,
                 itemBuilder: (BuildContext context, int index) {
-                  String? voice =
+                  String? voiceId =
                       voices[selectedLanguage]?.keys.elementAt(index);
                   DownloadManager downloadManager = DownloadManager();
                   Map<dynamic, dynamic> subvoices = voices[selectedLanguage]
@@ -274,8 +282,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                             ?.entries
                                             .elementAt(index)
                                             .value[4]
-                                    ? "$voice is the currently selected voice. Preview $voice"
-                                    : "Preview $voice",
+                                    ? "$voiceId is the currently selected voice. Preview $voiceId"
+                                    : "Preview $voiceId",
                                 enabled: true,
                                 child: IconButton(
                                     onPressed: () async {
@@ -292,7 +300,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                         if (previewUrl != null) {
                                           previewUrl = previewUrl.replaceAll(
                                               ":speaker_id:",
-                                              (selectedSubVoice[voice] ?? 0)
+                                              (selectedSubVoice[voiceId] ?? 0)
                                                   .toString());
                                           player.play(UrlSource(previewUrl));
                                           setState(() {
@@ -309,14 +317,14 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                         ? const Icon(Icons.stop)
                                         : const Icon(Icons.play_arrow))),
                         const SizedBox(width: 32),
-                        Text(voice!),
+                        Text(voiceId!),
                         subvoices.isEmpty
                             ? const SizedBox()
                             : const Text(" - "),
                         subvoices.isEmpty
                             ? const SizedBox()
                             : DropdownButton<int>(
-                                value: selectedSubVoice[voice] ?? 0,
+                                value: selectedSubVoice[voiceId] ?? 0,
                                 items: subvoices.entries
                                     .map<DropdownMenuItem<int>>((entry) =>
                                         DropdownMenuItem<int>(
@@ -325,7 +333,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                     .toList(),
                                 onChanged: (value) {
                                   setState(() {
-                                    selectedSubVoice[voice] = value!;
+                                    selectedSubVoice[voiceId] = value!;
                                   });
                                   saveSubVoiceSelection();
                                 }),
@@ -336,16 +344,17 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                 .elementAt(index)
                                 .value[4])
                             ? currentVoice ==
-                                    voices[selectedLanguage]
-                                        ?.entries
-                                        .elementAt(index)
-                                        .value[4]
+                                        voices[selectedLanguage]
+                                            ?.entries
+                                            .elementAt(index)
+                                            .value[4] &&
+                                    currentSubVoice == selectedSubVoice[voiceId]
                                 ? const SizedBox(
                                     height: 20,
                                     width: 99,
                                     child: Text("Current Voice"))
                                 : Semantics(
-                                    label: "Select $voice voice",
+                                    label: "Select $voiceId voice",
                                     enabled: true,
                                     child: ElevatedButton(
                                         onPressed: () async {
@@ -361,10 +370,6 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           MapEntry<String, List<dynamic>>
                                               voice = voices[selectedLanguage]!
                                                   .entries
-                                                  .elementAt(index);
-                                          String? voiceId =
-                                              voices[selectedLanguage]
-                                                  ?.keys
                                                   .elementAt(index);
                                           configString =
                                               configString.replaceAll(
@@ -393,6 +398,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           restartSD();
                                           setState(() {
                                             currentVoice = voice.value[4];
+                                            currentSubVoice =
+                                                selectedSubVoice[voiceId] ?? 0;
                                           });
                                           widget.onVoiceChanged();
                                         },
@@ -417,7 +424,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                                 value: progress));
                                       } else {
                                         return Semantics(
-                                            label: "Download $voice voice",
+                                            label: "Download $voiceId voice",
                                             enabled: true,
                                             child: ElevatedButton(
                                               child: const Text("Download"),
@@ -470,7 +477,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                 ""
                             ? const SizedBox()
                             : Semantics(
-                                label: "Information about $voice",
+                                label: "Information about $voiceId",
                                 enabled: true,
                                 child: IconButton(
                                     icon: const Icon(Icons.info),
@@ -480,7 +487,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                           barrierDismissible: false,
                                           builder: (BuildContext context) {
                                             return InfoDialog(
-                                              modelName: voice,
+                                              modelName: voiceId,
                                               infoUri: Uri.parse(
                                                   voices[selectedLanguage]!
                                                       .entries
@@ -499,7 +506,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                         .elementAt(index)
                                         .value[4]
                             ? Semantics(
-                                label: "Delete $voice",
+                                label: "Delete $voiceId",
                                 enabled: true,
                                 child: IconButton(
                                     icon: const Icon(Icons.delete),
