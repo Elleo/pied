@@ -325,7 +325,10 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                     .map<DropdownMenuItem<int>>((entry) =>
                                         DropdownMenuItem<int>(
                                             value: entry.value,
-                                            child: Text(entry.key)))
+                                            child: Semantics(
+                                                enabled: true,
+                                                label: "Select sub voice",
+                                                child: Text(entry.key))))
                                     .toList(),
                                 onChanged: (value) {
                                   setState(() {
