@@ -22,8 +22,8 @@ modules:
       - "./build-flatpak.sh"
     sources:
       - type: file
-        url: https://github.com/Elleo/pied/releases/download/v0.2.1/pied-0.2.1-x86_64.tar.gz
-        sha256: a1225ac7494b172dcab88acb74dfeb30a08ae12fb2266f6c654a2473ee326f21
+        url: https://github.com/Elleo/pied/releases/download/v0.3.0/pied-0.3.0-x86_64.tar.gz
+        sha256: f318d9e0d86f3c5af5900fb63c7e2bd76271a731be977385145809675eaa9908
       - type: file
         path: build-flatpak.sh
       - type: file
