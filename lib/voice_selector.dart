@@ -75,7 +75,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
           currentVoice = modelPath.split("/").last.trim();
         });
       }
-      re = RegExp("-s (\\d)");
+      re = RegExp("-s (\\d+)");
       String? subVoice = re.firstMatch(config)?.group(1);
       if (subVoice != null) {
         setState(() {
