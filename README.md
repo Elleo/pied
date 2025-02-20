@@ -7,6 +7,6 @@ Pied makes it simple to install and manage text-to-speech <a href="https://githu
 
 <img alt="A screenshot showing the voice selection page in Pied" src="https://github.com/Elleo/pied/blob/main/screenshots/screenshot.png?raw=true" width=400 height=auto />
 
-<a href="https://snapcraft.io/pied"><img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" /></a> <a href="https://github.com/Elleo/pied/releases/download/v0.2.1/com.mikeasoft.pied.flatpak"><img alt="Install Flatpak" src="https://pied.mikeasoft.com/images/install_flatpak.svg" style='height: 56px; width: auto; margin-left: 1em;' /></a>
+<a href="https://snapcraft.io/pied"><img alt="Get it from the Snap Store" src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg" /></a> <a href="https://github.com/Elleo/pied/releases/download/v0.3.0/com.mikeasoft.pied.flatpak"><img alt="Install Flatpak" src="https://pied.mikeasoft.com/images/install_flatpak.svg" style='height: 56px; width: auto; margin-left: 1em;' /></a>
 
 </p>
