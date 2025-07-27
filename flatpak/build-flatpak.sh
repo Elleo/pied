@@ -1,7 +1,7 @@
 set -e
 set -x
 
-tar -zxf pied-0.3.0-x86_64.tar.gz
+tar -zxf pied-0.3.1-x86_64.tar.gz
 
 mkdir -p /app/pied
 cp -r pied/* /app/pied/
