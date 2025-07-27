@@ -63,6 +63,8 @@ def main():
                                 base_url = match_filename.group(1)
                                 model_filename = match_filename.group(2)
                                 config_url = match.group(3)
+                                # Fix invalid download URLs in VOICES.md
+                                config_url = config_url.replace("true.json", "true")
                                 r = requests.get(config_url)
                                 remote_config = r.json()
                                 sample_url = "{}{}".format(base_url, r"/samples/speaker_:speaker_id:.mp3?download=true")
@@ -82,7 +84,7 @@ def main():
                                                                 model_filename,
                                                                 sample_url,
                                                                 card_url,
-                                                                remote_config["speaker_id_map"]
+                                                                remote_config.get("speaker_id_map", {})
                                                             ]
     output_data = "Map<String, Map<String, List<dynamic>>> voices = %s;\n\nMap<String, String> languageCodes =%s;" % (json.dumps(voices, indent=2), json.dumps(languageCodes, indent=2))
     if output_filename == "-":
