@@ -24,5 +24,5 @@ bool isFlatpak() {
 }
 
 String getVersion() {
-  return "0.3.0";
+  return "0.3.1";
 }
