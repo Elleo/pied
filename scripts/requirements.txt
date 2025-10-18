@@ -3,4 +3,4 @@ charset-normalizer==3.3.2
 idna==3.10
 markdown_to_json==2.1.2
 requests==2.32.3
-urllib3==2.2.3
+urllib3==2.5.0
