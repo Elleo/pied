@@ -13,7 +13,7 @@ Pied makes it simple to install and manage text-to-speech <a href="https://githu
 
 ## Build Instructions
 
-1. Install the [Flutter SDK](https://docs.flutter.dev/install)
+1. Install the [Flutter SDK](https://docs.flutter.dev/install) (last tested with SDK version 3.35.3)
 2. Change to the Pied directory
 3. Fetch dependencies: `flutter pub get`
 4. Build: `flutter build linux --release` (Or without `--release` if you want a debug build)
