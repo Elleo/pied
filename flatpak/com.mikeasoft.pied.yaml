@@ -11,7 +11,7 @@ finish-args:
   - --device=dri
   - --socket=pulseaudio
   - --share=network
-  - --filesystem=xdg-config
+  - --filesystem=xdg-config/speech-dispathcer:create
   - --talk-name=org.freedesktop.Flatpak
 modules:
   - name: Pied
