@@ -126,7 +126,7 @@ class _MainPageState extends State<MainPage> {
                         padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
                         child: Text("Version: ${getVersion()}")))),
         body: Padding(
-          padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
+          padding: const EdgeInsets.fromLTRB(10, 40, 10, 0),
           child: Center(
               child:
                   !supportedArchitectures.contains(SysInfo.kernelArchitecture)

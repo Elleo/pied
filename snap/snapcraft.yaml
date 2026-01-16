@@ -1,6 +1,6 @@
 name: pied
 base: core22
-version: '0.3.0'
+version: '0.3.1'
 summary: Pied makes it simple to install and manage text-to-speech voices.
 description: |
   Pied installs and configures the Piper neural text-to-speech engine to
