@@ -25,6 +25,13 @@
   </screenshots>
   <content_rating type="oars-1.1" />
   <releases>
+      <release version="0.3.2" date="2026-10-10">
+          <description>
+              * Update dependencies
+              * Drop normalization when using sox
+              * Remove delay between sentences
+          </description>
+      </release>
       <release version="0.3.1" date="2025-06-27">
           <description>
               * Fix invalid voice config URLs
