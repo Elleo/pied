@@ -28,6 +28,7 @@
       <release version="0.3.2" date="2026-10-10">
           <description>
               * Update dependencies
+              * Build flatpak against new SDK
               * Drop normalization when using sox
               * Remove delay between sentences
           </description>
