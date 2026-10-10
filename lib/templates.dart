@@ -20,6 +20,10 @@ GenericPitchAdd 1
 GenericVolumeAdd 1
 GenericRateMultiply 1
 GenericPitchMultiply 1000
+
+GenericDelimiters "˨"
+GenericMaxChunkLength 1000000
+
 AddVoice "LANGUAGE" "MALE1" "Piper"
 """;
 
