@@ -73,7 +73,7 @@ class _VoiceLabelState extends State<VoiceLabel> {
                         ? const Icon(Icons.stop)
                         : const Icon(Icons.play_arrow))),
         const SizedBox(width: 32),
-        Text(widget.voiceId),
+        Flexible(child: Text(widget.voiceId, overflow: TextOverflow.ellipsis)),
         widget.subvoices.isEmpty ? const SizedBox() : const Text(" - "),
         widget.subvoices.isEmpty
             ? const SizedBox()

@@ -155,7 +155,7 @@ class _VoiceButtonsState extends State<VoiceButtons> {
             ? widget.currentVoice == widget.voiceData[4] &&
                     widget.currentSubVoice == widget.selectedSubVoice
                 ? const SizedBox(
-                    height: 20, width: 99, child: Text("Current Voice"))
+                    height: 20, width: 120, child: Text("Current Voice"))
                 : Semantics(
                     label: "Select ${widget.voiceId} voice",
                     enabled: true,
