@@ -163,25 +163,29 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                     MapEntry<String, List<dynamic>> voice =
                         voices[selectedLanguage]!.entries.elementAt(index);
 
+                    bool wide = constraints.maxWidth > 470;
+                    Widget voiceLabel = VoiceLabel(
+                        voiceId: voiceId,
+                        voiceData: voice.value,
+                        subvoices: subvoices,
+                        currentVoice: currentVoice,
+                        player: player,
+                        onSubVoiceChanged: (subVoice) {
+                          setState(() {
+                            selectedSubVoice[voiceId] = subVoice;
+                          });
+                          saveSubVoiceSelection();
+                        });
+
                     List<Widget> voiceWidgets = [
-                      VoiceLabel(
-                          voiceId: voiceId,
-                          voiceData: voice.value,
-                          subvoices: subvoices,
-                          currentVoice: currentVoice,
-                          player: player,
-                          onSubVoiceChanged: (subVoice) {
-                            setState(() {
-                              selectedSubVoice[voiceId] = subVoice;
-                            });
-                            saveSubVoiceSelection();
-                          }),
-                      const Spacer(),
+                      // in a row the label gives way to the buttons
+                      wide ? Expanded(child: voiceLabel) : voiceLabel,
+                      if (!wide) const Spacer(),
                       const SizedBox(width: 10),
                       Align(
                           alignment: Alignment.centerRight,
                           child: SizedBox(
-                              width: 190,
+                              width: 240,
                               child: VoiceButtons(
                                   voiceId: voiceId,
                                   voiceData: voice.value,
@@ -207,10 +211,10 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                     ];
 
                     return SizedBox(
-                        height: constraints.maxWidth > 470 ? 50 : 102,
+                        height: wide ? 50 : 112,
                         child: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 4, 0, 4),
-                            child: constraints.maxWidth > 470
+                            child: wide
                                 ? Row(children: voiceWidgets)
                                 : Column(
                                     children: voiceWidgets +
