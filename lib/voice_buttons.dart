@@ -6,6 +6,7 @@ import 'package:path/path.dart' as path;
 import 'delete_dialog.dart';
 import 'download_manager.dart';
 import 'info_dialog.dart';
+import 'piper_config.dart';
 import 'templates.dart';
 import 'utils.dart';
 import 'confirmation_dialog.dart';
@@ -15,24 +16,20 @@ class VoiceButtons extends StatefulWidget {
       {super.key,
       required this.voiceId,
       required this.voiceData,
-      required this.currentVoice,
-      required this.currentSubVoice,
+      required this.currentVoices,
       required this.selectedSubVoice,
       required this.downloadedModels,
       required this.downloadManager,
       required this.onDownloadComplete,
-      required this.onCurrentVoiceChanged,
-      required this.onCurrentSubVoiceChanged});
+      required this.onCurrentVoicesChanged});
   final String voiceId;
-  final String currentVoice;
-  final int currentSubVoice;
+  final PiperVoices currentVoices;
   final int selectedSubVoice;
   final List<dynamic> voiceData;
   final List<String> downloadedModels;
   final DownloadManager downloadManager;
   final VoidCallback onDownloadComplete;
-  final ValueChanged<String> onCurrentVoiceChanged;
-  final ValueChanged<int> onCurrentSubVoiceChanged;
+  final VoidCallback onCurrentVoicesChanged;
 
   @override
   State<VoiceButtons> createState() => _VoiceButtonsState();
@@ -100,7 +97,9 @@ class _VoiceButtonsState extends State<VoiceButtons> {
     if (originalConfigDir != null) {
       originalConfigDir.rename(confDir.path);
     }
-    widget.onCurrentVoiceChanged("");
+    widget.currentVoices.byLanguage.clear();
+    widget.currentVoices.defaultVoice = "";
+    widget.onCurrentVoicesChanged();
     restartSD();
     Timer(const Duration(seconds: 2), () {
       showDialog<void>(
@@ -147,13 +146,28 @@ class _VoiceButtonsState extends State<VoiceButtons> {
         });
   }
 
+  // The voice of this button with the selected speaker
+  String get selectedVoiceName {
+    return voiceName(widget.voiceData[4], widget.selectedSubVoice);
+  }
+
+  bool get isCurrentVoice {
+    return widget.currentVoices.byLanguage[widget.voiceData[1]] ==
+        selectedVoiceName;
+  }
+
+  // A model in use by any language must not be deleted
+  bool get isModelInUse {
+    return widget.currentVoices.byLanguage.values
+        .any((String name) => voiceModel(name) == widget.voiceData[4]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         widget.downloadedModels.contains(widget.voiceData[4])
-            ? widget.currentVoice == widget.voiceData[4] &&
-                    widget.currentSubVoice == widget.selectedSubVoice
+            ? isCurrentVoice
                 ? const SizedBox(
                     height: 20, width: 120, child: Text("Current Voice"))
                 : Semantics(
@@ -162,27 +176,14 @@ class _VoiceButtonsState extends State<VoiceButtons> {
                     child: ElevatedButton(
                         onPressed: () async {
                           setSDConfig();
-                          final Directory appDir = await getDataDir();
-                          Directory modelDir =
-                              Directory(path.join(appDir.path, "models"));
-                          File modelConf = File(path.join(getHome()!,
-                              ".config/speech-dispatcher/modules/piper.conf"));
-                          String configString = modelTemplate;
-                          configString = configString.replaceAll("PIPER_PATH",
-                              path.join(appDir.path, "piper", "piper"));
-                          configString = configString.replaceAll("MODEL_PATH",
-                              path.join(modelDir.path, widget.voiceData[4]));
-                          configString = configString.replaceAll(
-                              "SAMPLE_RATE", widget.voiceData[0]);
-                          configString = configString.replaceAll(
-                              "LANGUAGE", widget.voiceData[1]);
-                          configString = configString.replaceAll(
-                              "SUBVOICE", widget.selectedSubVoice.toString());
-                          modelConf.writeAsString(configString);
+                          // the voice for its language, and for the
+                          // languages without a voice of their own
+                          widget.currentVoices.byLanguage[widget.voiceData[1]] =
+                              selectedVoiceName;
+                          widget.currentVoices.defaultVoice = selectedVoiceName;
+                          await writePiperVoices(widget.currentVoices);
                           restartSD();
-                          widget.onCurrentVoiceChanged(widget.voiceData[4]);
-                          widget.onCurrentSubVoiceChanged(
-                              widget.selectedSubVoice);
+                          widget.onCurrentVoicesChanged();
                         },
                         child: const Text("Select Voice")))
             : ValueListenableBuilder<double?>(
@@ -243,7 +244,7 @@ class _VoiceButtonsState extends State<VoiceButtons> {
                           });
                     })),
         widget.downloadedModels.contains(widget.voiceData[4]) &&
-                widget.currentVoice != widget.voiceData[4]
+                !isModelInUse
             ? Semantics(
                 label: "Delete ${widget.voiceId}",
                 enabled: true,

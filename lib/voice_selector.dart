@@ -8,6 +8,7 @@ import 'package:pied/voice_label.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path/path.dart' as path;
 import 'download_manager.dart';
+import 'piper_config.dart';
 import 'voice_data.dart';
 import 'utils.dart';
 
@@ -27,12 +28,11 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   String selectedLanguage = "English - US";
   List<String> downloadedModels = [];
   final player = AudioPlayer();
-  String currentVoice = "";
+  PiperVoices currentVoices = PiperVoices();
   int previewing = -1;
   String previewingLanguage = "English - US";
   List<String> languages = voices.keys.toList();
   Map<dynamic, dynamic> selectedSubVoice = {};
-  int currentSubVoice = 0;
   Map<String, DownloadManager> downloadManagers = {};
 
   void findDownloads() async {
@@ -52,33 +52,15 @@ class _VoiceSelectorState extends State<VoiceSelector> {
   }
 
   void getCurrentVoice() async {
-    File modelConf = File(
-        path.join(getHome()!, ".config/speech-dispatcher/modules/piper.conf"));
-    if (modelConf.existsSync()) {
-      String config = modelConf.readAsStringSync();
-      RegExp re = RegExp("--model *(.*onnx) *");
-      String? modelPath = re.firstMatch(config)?.group(1);
-      if (modelPath != null) {
-        setState(() {
-          currentVoice = modelPath.split("/").last.trim();
-        });
+    PiperVoices voices = readPiperVoices();
+    String? language = languageCodes[voiceLanguage(voices.defaultVoice)];
+    setState(() {
+      currentVoices = voices;
+      if (language != null) {
+        selectedLanguage = language;
+        previewingLanguage = language;
       }
-      re = RegExp("-s (\\d+)");
-      String? subVoice = re.firstMatch(config)?.group(1);
-      if (subVoice != null) {
-        setState(() {
-          currentSubVoice = int.parse(subVoice);
-        });
-      }
-      re = RegExp("AddVoice \"([^\"]+)\"");
-      String? language = re.firstMatch(config)?.group(1);
-      if (language != null && languageCodes.containsKey(language)) {
-        setState(() {
-          selectedLanguage = languageCodes[language]!;
-          previewingLanguage = selectedLanguage;
-        });
-      }
-    }
+    });
   }
 
   void getSubVoiceSelection() async {
@@ -168,7 +150,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                         voiceId: voiceId,
                         voiceData: voice.value,
                         subvoices: subvoices,
-                        currentVoice: currentVoice,
+                        currentVoice: voiceModel(
+                            currentVoices.byLanguage[voice.value[1]] ?? ""),
                         player: player,
                         onSubVoiceChanged: (subVoice) {
                           setState(() {
@@ -189,8 +172,7 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                               child: VoiceButtons(
                                   voiceId: voiceId,
                                   voiceData: voice.value,
-                                  currentVoice: currentVoice,
-                                  currentSubVoice: currentSubVoice,
+                                  currentVoices: currentVoices,
                                   selectedSubVoice:
                                       selectedSubVoice[voiceId] ?? 0,
                                   downloadedModels: downloadedModels,
@@ -198,15 +180,8 @@ class _VoiceSelectorState extends State<VoiceSelector> {
                                   onDownloadComplete: () {
                                     widget.onDownloadComplete();
                                   },
-                                  onCurrentVoiceChanged: (String newVoice) {
-                                    setState(() {
-                                      currentVoice = newVoice;
-                                    });
-                                  },
-                                  onCurrentSubVoiceChanged: (int newSubVoice) {
-                                    setState(() {
-                                      currentSubVoice = newSubVoice;
-                                    });
+                                  onCurrentVoicesChanged: () {
+                                    setState(() {});
                                   })))
                     ];
 
